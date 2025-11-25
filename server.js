@@ -1,0 +1,23 @@
+const express = require("express");
+const bodyParser = require('body-parser');
+const app = express();
+const mongoose = require("mongoose");
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + "/public"));
+
+
+app.listen(3000, function () {
+    console.log("server started at 3000");
+});
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + "/public/homepage.html");
+});
+app.get('/programs', function (req, res) {
+    res.sendFile(__dirname + "/public/programs.html");
+});
+app.get('/impact', function (req, res) {
+    res.sendFile(__dirname + "/public/impact.html");
+});
+
