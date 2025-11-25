@@ -3,3 +3,8 @@
     height:50px !important;
     border-radius: 40%;
 }
+
+.carousel-item > img {
+    width:640px;
+    height:600px;
+}
