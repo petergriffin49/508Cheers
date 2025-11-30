@@ -1,29 +1,27 @@
 import React from "react";
-import logo_transparent from "../assets/imgs/logo-trans.png"
+import logo_transparent from "../assets/imgs/logo-trans.png";
 
 function Footer() {
   return (
-    <footer className="footer-bg border-top mt-5 pt-4 pb-3">
-      <div className="container">
+    <footer
+      className="footer-bg border-top mt-5 pt-4 pb-3"
+      style={{ background: "#d9d9d9" }}
+    >
+      <div className="container-fluid">
         <div className="row align-items-center mb-4">
           {/* Left: Logo + text */}
-          <div className="col-md-4 text-center text-md-start mb-4 mb-md-0">
+          <div className="col-md-2 text-center text-md-start ">
             <img
               src={logo_transparent}
               alt="C.H.E.E.R.S. logo "
-              className="footer-logo mb-3 w-50"
+              className="footer-logo mb-3 img-fluid"
+              style={{height: "160px", width:"auto", objectFit:"contain"}}
             />
-            <h4 className="fw-bold mb-1">C.H.E.E.R.S.</h4>
-            <p className="mb-0 small text-muted">
-              COMMUNITY, HEALTH, EQUITY
-              <br />
-              EMPOWERMENT, RESOURCES AND SERVICE
-            </p>
-          </div>
+          </div> 
 
           {/* Middle: Donate + PDF + socials */}
-          <div className="col-md-4 text-center mb-4 mb-md-0">
-            <button className="btn donate-banner rounded-pill px-4 py-2 w-100 mb-3">
+          <div className="col-md-4 text-center mx-auto">
+            <button className="btn btn-secondary donate-banner px-1 py-2  mb-3">
               — DONATE NOW VIA PAYPAL —
             </button>
 
@@ -32,7 +30,7 @@ function Footer() {
             </button>
 
             <div className="d-flex justify-content-center gap-4 mt-2">
-              {/* Bootstrap Icons or Font Awesome here */}
+              {/* Bootstrap Icons  */}
               <a href="#" className="social-icon-link">
                 <i className="bi bi-instagram fs-1" />
               </a>
@@ -57,12 +55,10 @@ function Footer() {
                 Submit
               </button>
             </form>
+            <div className="text-center small text-muted mt-5">
+              Copyright © 2025 C.H.E.E.R.S. - All Rights Reserved.
+            </div>
           </div>
-        </div>
-
-        {/* Bottom copyright */}
-        <div className="text-center small text-muted">
-          Copyright © 2025 C.H.E.E.R.S. - All Rights Reserved.
         </div>
       </div>
     </footer>

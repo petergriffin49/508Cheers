@@ -6,7 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // needed for navbar toggles, modals, etc.
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
+//icons 
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
