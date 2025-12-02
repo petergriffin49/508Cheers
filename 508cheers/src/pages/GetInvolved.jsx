@@ -9,7 +9,7 @@ function GetInvolved() {
     <>
       <Navbar />
 
-      <main className="get-involved-page mt-4">
+      <main className="get-involved-page ">
         {/* Hero image */}
         <section className="bg-white">
           <div className="container-fluid p-0">

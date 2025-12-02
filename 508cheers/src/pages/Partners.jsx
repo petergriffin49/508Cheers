@@ -8,7 +8,7 @@ function Partners() {
     <>
       <Navbar />
 
-      <main className="partners-page mt-4">
+      <main className="partners-page">
         {/* Hero image */}
         <section className="bg-white">
           <div className="container-fluid p-0">
