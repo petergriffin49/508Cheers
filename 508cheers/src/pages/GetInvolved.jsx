@@ -131,7 +131,7 @@ function GetInvolved() {
                   rel="noopener noreferrer"
                   className="btn btn-outline-primary btn-lg w-100"
                 >
-                  DONATE NOW VIA PAYPAL
+                    — DONATE NOW —
                 </a>
               </div>
             </div>

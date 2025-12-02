@@ -97,7 +97,7 @@ function About() {
             <div className="row justify-content-center">
               <div className="col-12 col-md-6 col-lg-4">
                 <a
-                  href="/pdfs/why-we-cheers.pdf"
+                  href="/api/pdf/4"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-warning btn-lg w-100 fw-bold"

@@ -81,6 +81,7 @@ function Home() {
         <img src="img/logo.png" id="big-logo" alt="big logo" />
 
         <h2>What we C.H.E.E.R.S. For</h2>
+        <br></br>
         <p>
           C- Community Service & Connection  Creating opportunities for youth to
           lead projects that uplift the unsheltered, underserved, and local
@@ -122,8 +123,7 @@ function Home() {
               src="https://www.youtube.com/embed/f7MMh8wfkAQ?si=lhVhqzXGtVBh0d2W"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
             ></iframe>
             <h2>Your Mental Health Matters Art Expression Project</h2>
             <h4>
@@ -138,8 +138,7 @@ function Home() {
               src="https://www.youtube.com/embed/Uh2F8r3LMa4?si=qx-epiREmRKmaghm"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
             ></iframe>
             <h2>Food Insecurity What's Going on in the Community Garden</h2>
             <h4>
@@ -152,14 +151,16 @@ function Home() {
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="text-center row">
         <a
           id="article-link"
           target="_blank"
           href="https://www.telegram.com/story/news/2025/04/30/508-cheer-gives-kids-in-worcester-a-second-chance-to-find-their-voice/83271502007/"
         >
-          Read the Telegram and Gazette Article Here
+          Read the Telegram & Gazette Article Here
         </a>
+      </div>
+      <div className="text-center row">
         <img
           src="img/img1.webp"
           alt="img"

@@ -21,9 +21,9 @@ function Footer() {
 
           {/* Middle: Donate + PDF + socials */}
           <div className="col-md-4 text-center mx-auto">
-            <button className="btn btn-secondary donate-banner px-1 py-2  mb-3">
-              — DONATE NOW VIA PAYPAL —
-            </button>
+            <a className="btn btn-secondary donate-banner px-1 py-2 mb-3" role="button" href = "https://secure.qgiv.com/for/508cheers">
+              — DONATE NOW —
+            </a>
 
             <a
               className="btn btn-warning rounded-pill px-4 py-2 mb-3"
@@ -36,10 +36,10 @@ function Footer() {
 
             <div className="d-flex justify-content-center gap-4 mt-2">
               {/* Bootstrap Icons  */}
-              <a href="#" className="social-icon-link">
+              <a href="https://www.facebook.com/508cheers/#" className="social-icon-link">
                 <i className="bi bi-instagram fs-1" />
               </a>
-              <a href="#" className="social-icon-link">
+              <a href="https://www.instagram.com/508cheers/#" className="social-icon-link">
                 <i className="bi bi-facebook fs-1" />
               </a>
             </div>

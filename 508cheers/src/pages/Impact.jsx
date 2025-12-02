@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import youthGroup from "../assets/imgs/img2.webp";
+import youthGroup from "../assets/imgs/banner.png";
 
 function Impact() {
   return (
@@ -127,18 +127,18 @@ function Impact() {
                 <div className="card h-100">
                   <div className="card-body">
                     <div className="ratio ratio-16x9 mb-3">
-                      <iframe
-                        src="https://www.youtube.com/embed/VIDEO_ID_2"
-                        title="Summer program highlight"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                        <iframe width="560" height="315"
+                                src="https://www.youtube.com/embed/xzsryZsduLQ?si=6AE3m15Zy7RQTFPx"
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen></iframe>
                     </div>
-                    <h5 className="card-title">Fun! Fun! Fun!</h5>
-                    <p className="card-text">
-                      At 508 C.H.E.E.R.S. we didn&apos;t just learn how to
-                      better our community, we had a blast doing it!
-                    </p>
+                      <h5 className="card-title">Fun! Fun! Fun!</h5>
+                      <p className="card-text">
+                          At 508 C.H.E.E.R.S. we didn&apos;t just learn how to
+                          better our community, we had a blast doing it!
+                      </p>
                   </div>
                 </div>
               </div>
@@ -169,19 +169,19 @@ function Impact() {
                 <div className="card h-100">
                   <div className="card-body">
                     <div className="ratio ratio-16x9 mb-3">
-                      <iframe
-                        src="https://www.youtube.com/embed/VIDEO_ID_3"
-                        title="Advocacy at City Hall"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                        <iframe width="560" height="315"
+                                src="https://www.youtube.com/embed/0Q9-dQLuO9Q?si=NjSUfoeUq9OYKM68"
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen></iframe>
                     </div>
-                    <h5 className="card-title">
-                      Hennessy Public Testimonies and Youth Voice
-                    </h5>
-                    <p className="card-text mb-0">
-                      Our youth advocate at City Council, School Committee, and
-                      State House meetings, making sure their voices are heard.
+                      <h5 className="card-title">
+                          Hennessy Public Testimonies and Youth Voice
+                      </h5>
+                      <p className="card-text mb-0">
+                          Our youth advocate at City Council, School Committee, and
+                          State House meetings, making sure their voices are heard.
                     </p>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ function Impact() {
           </div>
         </section>
 
-        {/* Facebook posts */}
+        {/* News posts */}
         <section className="py-5">
           <div className="container">
             <h2 className="text-center mb-1">
@@ -225,7 +225,7 @@ function Impact() {
               Follow us on Facebook to see our latest updates.
             </p>
 
-            <h5 className="mb-3">Facebook Posts</h5>
+            <h5 className="mb-3">News Posts</h5>
 
             <div className="row gy-3">
               <div className="col-12">
