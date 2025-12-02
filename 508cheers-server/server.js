@@ -36,3 +36,22 @@ app.get('/pdf-about', function (req, res) {
 });
 
 
+const pdfs = {
+    
+}
+
+app.get("/pdf/:id", (req, res) =>{
+    const {id} = req.params;
+    const filename = pdfs[id]
+    if (!fileName) {
+    return res.status(404).send("PDF not found");
+  }
+
+  const filePath = path.join(__dirname, "pdfs", fileName); 
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending PDF");
+    }
+  });
+})
