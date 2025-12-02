@@ -10,7 +10,7 @@ function Partners() {
     useEffect(() => {
         const fetchPartners = async () => {
             try {
-                const res = await fetch("http://localhost:3001/node-get-all-partners");
+                const res = await fetch("http://localhost:3001/get-all-partners");
                 if (!res.ok) {
                     throw new Error("Failed fetching partners error: " + res.status);
                 }

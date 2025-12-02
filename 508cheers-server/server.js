@@ -1,31 +1,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 app.listen(3001, function () {
-  console.log("server started at 3001");
+  console.log("-server started at 3001");
 });
 
 mongoose.connect("mongodb://localhost:27017/508cheers", {})
     .then(function(db){
-        console.log("-Database Connected-")
+        console.log("--Database Connected")
     });
 
-const partnerSchema = {
-    name : {
-        type: String,
-        required: true
-    },
-    img : {
-        type: String
-    }
-}
-const Partner = mongoose.model("Partner", partnerSchema);
 
 // OLD
 /*
@@ -78,4 +70,30 @@ app.get("/pdf/:id", (req, res) => {
 });
 
 // PARTNERS DATASET
+const partnerSchema = {
+    name : {
+        type: String,
+        required: true
+    },
+    img : {
+        type: String
+    }
+}
+const Partner = mongoose.model("Partner", partnerSchema);
+
+app.get("/get-all-partners", function(req, res) {
+    // console.log("getting all partners...")
+    Partner.find().then(parts => {
+        res.send({
+            "message":"success",
+            data: parts
+        });
+    }).catch(err => {
+        res.send({
+            "message":"error",
+            "data":err
+        });
+    });
+});
+
 
