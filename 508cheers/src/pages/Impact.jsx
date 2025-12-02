@@ -20,24 +20,23 @@ function Impact() {
             <div className="row justify-content-center">
               <div className="col-12 col-md-8">
                 <div className="ratio ratio-16x9">
-                  <iframe
-                    src="https://www.youtube.com/embed/VIDEO_ID"
-                    title="Youth testimonial"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/i366kX_JbyI?si=brqpZZuoO5TDWulM"
+                            title="YouTube video player" frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen></iframe>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Stats strip */}
-        <section className="py-4 bg-primary text-white text-center">
-          <div className="container">
-            <div className="row gy-3">
-              <div className="col-12 col-md-4">
-                <h3 className="mb-1">+99</h3>
+          {/* Stats strip */}
+          <section className="py-4 bg-primary text-white text-center">
+              <div className="container">
+                  <div className="row gy-3">
+                      <div className="col-12 col-md-4">
+                      <h3 className="mb-1">+99</h3>
                 <p className="mb-0">Meals Served Monthly</p>
               </div>
               <div className="col-12 col-md-4">

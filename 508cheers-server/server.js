@@ -7,11 +7,28 @@ const path = require("path");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-app.listen(3000, function () {
-  console.log("server started at 3000");
+app.listen(3001, function () {
+  console.log("server started at 3001");
 });
 
-//
+mongoose.connect("mongodb://localhost:27017/508cheers", {})
+    .then(function(db){
+        console.log("-Database Connected-")
+    });
+
+const partnerSchema = {
+    name : {
+        type: String,
+        required: true
+    },
+    img : {
+        type: String
+    }
+}
+const Partner = mongoose.model("Partner", partnerSchema);
+
+// OLD
+/*
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/public/homepage.html");
 });
@@ -21,7 +38,7 @@ app.get("/programs", function (req, res) {
 app.get("/impact", function (req, res) {
   res.sendFile(__dirname + "/public/impact.html");
 });
-//
+
 app.get("/pdf-fund", function (req, res) {
   res.sendFile(__dirname + "/public/pdf-fundraiser.html");
 });
@@ -34,7 +51,9 @@ app.get("/pdf-programs", function (req, res) {
 app.get("/pdf-about", function (req, res) {
   res.sendFile(__dirname + "/public/pdf-about.html");
 });
+*/
 
+// PDF PATh
 const pdfs = {
   "1": "/pdfs/pdf1.pdf",
   "2": "pdfs/pdf2.pdf",
@@ -57,3 +76,6 @@ app.get("/pdf/:id", (req, res) => {
     }
   });
 });
+
+// PARTNERS DATASET
+

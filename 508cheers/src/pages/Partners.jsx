@@ -1,9 +1,36 @@
 import React from "react";
+import {useState, useEffect} from 'react'
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import partnersHero from "../assets/imgs/img14.webp"
 
 function Partners() {
+    const [partners, setPartners] = React.useState([])
+    const [error, setError] = React.useState(false)
+    useEffect(() => {
+        const fetchPartners = async () => {
+            try {
+                const res = await fetch("http://localhost:3001/node-get-all-partners");
+                if (!res.ok) {
+                    throw new Error("Failed fetching partners error: " + res.status);
+                }
+                const data = await res.json();
+
+                if (data.message === "success") {
+                    setPartners(data.data);
+                } else {
+                    setError(data.message);
+                }
+            } catch (error) {
+                setError(error.message)
+            }
+        }
+
+        fetchPartners();
+    });
+
+
+
   return (
     <>
       <Navbar />
@@ -84,6 +111,16 @@ function Partners() {
             <div className="row justify-content-center">
               <div className="col-12 col-md-10 col-lg-8">
                 <ul className="mb-4">
+                    {
+                        partners.map(function(partner){
+                            return (
+                                <li>
+                                    {partner.name}
+                                </li>
+                            )
+                        })
+                    }
+                    {/*
                   <li>All One Credit Union</li>
                   <li>Worcester Community Action Council</li>
                   <li>Worcester Family Resource Center</li>
@@ -100,6 +137,7 @@ function Partners() {
                   <li>The No Evil Project</li>
                   <li>Woo Sox</li>
                   <li>Greater Worcester Community Foundation</li>
+                  */}
                 </ul>
               </div>
             </div>
