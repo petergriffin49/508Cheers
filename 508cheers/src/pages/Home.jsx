@@ -172,24 +172,24 @@ function Home() {
 
       <div className="row">
         <div className="text-center col-6">
-          <a href="/pdf-fund" target="_blank" className="pdf-btn">
+          <a href="/api/pdf/1" target="_blank" className="pdf-btn">
             Fundraiser
           </a>
         </div>
         <div className="text-center col-6">
-          <a href="/pdf-girls" target="_blank" className="pdf-btn">
+          <a href="/api/pdf/2" target="_blank" className="pdf-btn">
             Girls Empowerment
           </a>
         </div>
       </div>
       <div className="row">
         <div className="text-center col-6">
-          <a href="/pdf-programs" target="_blank" className="pdf-btn">
+          <a href="/api/pdf/3" target="_blank" className="pdf-btn">
             Program Offerings
           </a>
         </div>
         <div className="text-center col-6">
-          <a href="/pdf-about" target="_blank" className="pdf-btn">
+          <a href="/api/pdf/4" target="_blank" className="pdf-btn">
             C.H.E.E.R.S.
           </a>
         </div>

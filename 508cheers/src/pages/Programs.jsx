@@ -112,7 +112,7 @@ function Programs() {
 
           <div className="text-center mt-4">
             <a
-              href="/pdfs/program-offerings.pdf"
+              href="/api/pdf/3"
               className="btn btn-warning btn-lg fw-semibold"
             >
               PROGRAM OFFERINGS PDF
@@ -191,7 +191,7 @@ function Programs() {
 
           <div className="text-center mt-4">
             <a
-              href="/pdfs/girls-empowerment-program.pdf"
+              href="/api/pdf/2"
               className="btn btn-warning btn-lg fw-semibold"
             >
               GIRLS EMPOWERMENT PROGRAM PDF

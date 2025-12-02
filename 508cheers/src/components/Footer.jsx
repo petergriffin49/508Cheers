@@ -15,9 +15,9 @@ function Footer() {
               src={logo_transparent}
               alt="C.H.E.E.R.S. logo "
               className="footer-logo mb-3 img-fluid"
-              style={{height: "160px", width:"auto", objectFit:"contain"}}
+              style={{ height: "160px", width: "auto", objectFit: "contain" }}
             />
-          </div> 
+          </div>
 
           {/* Middle: Donate + PDF + socials */}
           <div className="col-md-4 text-center mx-auto">
@@ -25,9 +25,14 @@ function Footer() {
               — DONATE NOW VIA PAYPAL —
             </button>
 
-            <button className="btn btn-warning rounded-pill px-4 py-2 mb-3">
+            <a
+              className="btn btn-warning rounded-pill px-4 py-2 mb-3"
+              href="/api/pdf/1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               FUNDRAISER PDF VIEW/DOWNLOAD
-            </button>
+            </a>
 
             <div className="d-flex justify-content-center gap-4 mt-2">
               {/* Bootstrap Icons  */}
