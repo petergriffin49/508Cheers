@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import partnersHero from "../assets/imgs/img14.webp";
+import gallery1 from "../assets/imgs/img5.webp";
+import gallery2 from "../assets/imgs/img3.webp";
 
 function Partners() {
   const [partners, setPartners] = useState([]);
@@ -68,7 +70,7 @@ function Partners() {
                 </div>
                 <div className="col-12 col-lg-6">
                   <div className="row g-3">
-                    {[partnersHero, "/img/img5.webp", "/img/img3.webp"].map((img, idx) => (
+                    {[partnersHero, gallery1, gallery2].map((img, idx) => (
                       <div className="col-6" key={idx}>
                         <img
                           src={img}
