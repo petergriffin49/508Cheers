@@ -58,21 +58,45 @@ const pdfs = {
   3: "/data/pdfs/pdf3.pdf",
   4: "/data/pdfs/pdf4.pdf",
 };
+const defaultPdfTitles = {
+  1: "Fundraiser",
+  2: "Girls Empowerment",
+  3: "Program Offerings",
+  4: "C.H.E.E.R.S.",
+};
 
 app.get("/pdf/:id", (req, res) => {
   const { id } = req.params;
-  const fileName = pdfs[id];
-  if (!fileName) {
-    return res.status(404).send("PDF not found");
-  }
+  const serveFile = (filePath) => {
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error sending PDF");
+      }
+    });
+  };
 
-  const filePath = path.join(__dirname, fileName);
-  res.sendFile(filePath, (err) => {
-    if (err) {
+  Pdf.findOne({ slot: Number(id) })
+    .then((doc) => {
+      if (doc && doc.url) {
+        const uploadedPath = doc.url.startsWith("/uploads/")
+          ? path.join(__dirname, "public", doc.url.replace("/uploads/", "uploads/"))
+          : path.join(__dirname, doc.url);
+        if (fs.existsSync(uploadedPath)) {
+          return serveFile(uploadedPath);
+        }
+      }
+      const fileName = pdfs[id];
+      if (!fileName) {
+        return res.status(404).send("PDF not found");
+      }
+      const filePath = path.join(__dirname, fileName);
+      serveFile(filePath);
+    })
+    .catch((err) => {
       console.error(err);
       res.status(500).send("Error sending PDF");
-    }
-  });
+    });
 });
 
 // PARTNERS DATASET
@@ -97,6 +121,15 @@ const contentSchema = {
   value: { type: String, default: "" },
 };
 const Content = mongoose.model("Content", contentSchema);
+const pdfSchema = new mongoose.Schema(
+  {
+    slot: { type: Number, required: true, unique: true, min: 1, max: 4 },
+    title: { type: String, required: true },
+    url: { type: String, required: true },
+  },
+  { timestamps: true }
+);
+const Pdf = mongoose.model("Pdf", pdfSchema);
 
 function normalizeImgPath(pathStr) {
   if (!pathStr) return pathStr;
@@ -341,6 +374,72 @@ app.delete("/admin/directors/:id", requireAdmin, async (req, res) => {
   try {
     await Director.findByIdAndDelete(id);
     res.json({ message: "success" });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+// Admin PDFs CRUD
+app.get("/admin/pdfs", requireAdmin, async (req, res) => {
+  try {
+    const docs = await Pdf.find();
+    const slots = [1, 2, 3, 4].map((slot) => {
+      const found = docs.find((d) => d.slot === slot);
+      if (!found) {
+        return {
+          slot,
+          title: defaultPdfTitles[slot] || `PDF ${slot}`,
+          url: `/pdf/${slot}`,
+        };
+      }
+      return {
+        slot,
+        title: found.title,
+        url: normalizeImgPath(found.url),
+        _id: found._id,
+      };
+    });
+    res.json({ message: "success", data: slots });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+app.put("/admin/pdfs/:slot", requireAdmin, upload.single("pdf"), async (req, res) => {
+  try {
+    const { slot } = req.params;
+    const slotNum = Number(slot);
+    if (![1, 2, 3, 4].includes(slotNum)) {
+      return res.status(400).json({ message: "Invalid PDF slot" });
+    }
+    const { title } = req.body || {};
+    const update = {};
+    if (title) update.title = title;
+    let oldPath = null;
+    const existing = await Pdf.findOne({ slot: slotNum });
+    if (req.file) {
+      const url = `/uploads/${req.file.filename}`;
+      update.url = url;
+      if (existing?.url) {
+        oldPath = path.join(__dirname, "public", existing.url.replace("/uploads/", "uploads/"));
+      }
+    }
+    if (!existing && !update.url) {
+      return res.status(400).json({ message: "Upload a PDF file to set this slot" });
+    }
+    const updated = await Pdf.findOneAndUpdate(
+      { slot: slotNum },
+      {
+        slot: slotNum,
+        title: update.title || existing?.title || `PDF ${slotNum}`,
+        url: update.url || existing?.url,
+      },
+      { upsert: true, new: true }
+    );
+    if (oldPath && fs.existsSync(oldPath)) {
+      fs.unlink(oldPath, () => {});
+    }
+    res.json({ message: "success", data: updated });
   } catch (err) {
     res.status(500).json({ message: "error", data: err });
   }
