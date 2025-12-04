@@ -3,65 +3,81 @@ import logo_transparent from "../assets/imgs/logo-trans.png";
 
 function Footer() {
   return (
-    <footer
-      className="footer-bg border-top mt-5 pt-4 pb-3"
-      style={{ background: "#d9d9d9" }}
-    >
-      <div className="container-fluid">
-        <div className="row align-items-center mb-4">
-          {/* Left: Logo + text */}
-          <div className="col-md-2 text-center text-md-start ">
+    <footer className="footer-bg border-top mt-5 pt-5 pb-4">
+      <div className="container">
+        <div className="row gy-4 align-items-center">
+          {/* Left: Logo + mantra */}
+          <div className="col-12 col-md-4 text-center text-md-start">
             <img
               src={logo_transparent}
               alt="C.H.E.E.R.S. logo "
               className="footer-logo mb-3 img-fluid"
-              style={{ height: "160px", width: "auto", objectFit: "contain" }}
+              style={{ height: "140px", width: "auto", objectFit: "contain" }}
             />
+            <p className="mb-2 fw-semibold text-dark">Youth Led · Community Fed.</p>
+            <p className="text-muted small mb-0">
+              Mentorship, meals, and mutual aid powered by Worcester youth.
+            </p>
           </div>
 
-          {/* Middle: Donate + PDF + socials */}
-          <div className="col-md-4 text-center mx-auto">
-            <a className="btn btn-secondary donate-banner px-1 py-2 mb-3" role="button" href = "https://secure.qgiv.com/for/508cheers">
-              — DONATE NOW —
+          {/* Middle: donate + socials */}
+          <div className="col-12 col-md-4 text-center">
+            <a
+              className="btn btn-donate-gradient w-100 mb-3 fw-bold"
+              role="button"
+              href="https://secure.qgiv.com/for/508cheers"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Donate to 508 C.H.E.E.R.S.
             </a>
 
             <a
-              className="btn btn-warning rounded-pill px-4 py-2 mb-3"
+              className="btn btn-outline-dark rounded-pill px-4 py-2 mb-3 w-100"
               href="/api/pdf/1"
               target="_blank"
               rel="noopener noreferrer"
             >
-              FUNDRAISER PDF VIEW/DOWNLOAD
+              Fundraiser PDF
             </a>
 
-            <div className="d-flex justify-content-center gap-4 mt-2">
-              {/* Bootstrap Icons  */}
-              <a href="https://www.facebook.com/508cheers/#" className="social-icon-link">
+            <div className="d-flex justify-content-center gap-3 mt-2">
+              <a
+                href="https://www.instagram.com/508cheers"
+                className="social-icon-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <i className="bi bi-instagram fs-1" />
               </a>
-              <a href="https://www.instagram.com/508cheers/#" className="social-icon-link">
+              <a
+                href="https://www.facebook.com/508cheers/"
+                className="social-icon-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
                 <i className="bi bi-facebook fs-1" />
               </a>
             </div>
           </div>
 
           {/* Right: Newsletter */}
-          <div className="col-md-4 text-center text-md-start">
-            <h5 className="fw-bold mb-3">Newsletter Sign-up</h5>
-
-            <label className="form-label d-block text-start small">Email</label>
+          <div className="col-12 col-md-4 text-center text-md-start">
+            <h5 className="fw-bold mb-3">Stay in the Loop</h5>
             <form className="d-flex flex-column flex-sm-row gap-2">
               <input
                 type="email"
                 className="form-control"
-                placeholder="example@example.com"
+                placeholder="Email"
               />
               <button type="submit" className="btn btn-primary px-4">
                 Submit
               </button>
             </form>
-            <div className="text-center small text-muted mt-5">
-              Copyright © 2025 C.H.E.E.R.S. - All Rights Reserved.
+            <div className="text-center text-md-start small text-muted mt-4">
+              © 2025 C.H.E.E.R.S. All Rights Reserved.
             </div>
           </div>
         </div>

@@ -9,17 +9,27 @@ function About() {
     <>
       <Navbar />
 
-      <main className="about-page mt-4">
-        {/* Logo / Hero */}
-        <section className="bg-white pt-4 pb-2">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-8 col-lg-6">
-                <img
-                  src={cheersLogo}
-                  alt="C.H.E.E.R.S. logo"
-                  className="img-fluid d-block mx-auto mb-4"
-                />
+      <main className="about-page">
+        {/* Hero */}
+        <section className="position-relative mb-4">
+          <div className="cheers-hero">
+            <img src="/img/img1.webp" alt="Youth impact" className="d-block w-100" />
+            <div className="hero-overlay">
+              <div className="container">
+                <div className="hero-content">
+                  <span className="badge-pill mb-2">Why We C.H.E.E.R.S.</span>
+                  <h1 className="display-6 fw-bold mb-3">
+                    Youth mentorship, meals, and mutual aid—powered by Worcester youth voices.
+                  </h1>
+                  <a
+                    href="/api/pdf/4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-donate-gradient fw-bold"
+                  >
+                    Why We C.H.E.E.R.S. PDF
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -28,26 +38,24 @@ function About() {
         {/* About Us */}
         <section className="py-4 bg-white">
           <div className="container">
-            <h2 className="text-center mb-3">About Us</h2>
+            <div className="text-center mb-4">
+              <div className="badge-pill mb-2">About Us</div>
+              <h2 className="mb-2">Youth Led · Community Fed</h2>
+            </div>
             <div className="row justify-content-center">
               <div className="col-12 col-md-10 col-lg-8">
                 <p className="text-center mb-2">
-                  508 C.H.E.E.R.S. empowers BIPOC, low-income, and underserved
-                  youth through mentorship, community service, and mutual aid
-                  projects.
+                  508 C.H.E.E.R.S. empowers BIPOC, low-income, and underserved youth through mentorship,
+                  community service, and mutual aid projects.
                 </p>
                 <p className="text-center mb-2">
-                  We address food insecurity, promote health and wellness, and
-                  create pathways for personal and community growth.
+                  We address food insecurity, promote health and wellness, and create pathways for personal and community growth.
                 </p>
                 <p className="text-center mb-2">
-                  Together, we&apos;re building a more equitable, connected, and
-                  compassionate Worcester, one youth leader at a time.
+                  Together, we&apos;re building a more equitable, connected, and compassionate Worcester, one youth leader at a time.
                 </p>
                 <p className="text-center mb-0">
-                  Our programs give youth the tools to lead, advocate, and
-                  inspire change, turning their ideas into action that
-                  strengthens the city we all call home.
+                  Our programs give youth the tools to lead, advocate, and inspire change—turning ideas into action.
                 </p>
               </div>
             </div>
@@ -57,21 +65,18 @@ function About() {
         {/* Mission */}
         <section className="py-5 bg-white">
           <div className="container">
-            <h2 className="text-center mb-3">Our Mission Why We C.H.E.E.R.S.</h2>
+            <div className="text-center mb-4">
+              <div className="badge-pill mb-2">Our Mission</div>
+              <h2 className="mb-2">Why We C.H.E.E.R.S.</h2>
+            </div>
             <div className="row justify-content-center">
               <div className="col-12 col-md-10 col-lg-8">
                 <p className="text-center mb-3">
-                  508 C.H.E.E.R.S. empowers youth to use their voices, talents,
-                  and lived experiences to create real change in their
-                  communities. We teach that leadership begins with giving, and
-                  that their stories hold power and their actions create impact.
+                  508 C.H.E.E.R.S. empowers youth to use their voices, talents, and lived experiences to create real change in their communities.
+                  Leadership begins with giving; their stories hold power, and their actions create impact.
                 </p>
                 <p className="text-center mb-0">
-                  Through mentorship, cultural programming, and service projects
-                  addressing food insecurity, mental wellness, and equity, youth
-                  learn to serve, lead, and speak together, discovering what it
-                  means to be part of something bigger than themselves—a
-                  movement for hope, equity, and change.
+                  Through mentorship, cultural programming, and service projects addressing food insecurity, mental wellness, and equity, youth learn to serve, lead, and speak together—a movement for hope, equity, and change.
                 </p>
               </div>
             </div>
@@ -81,14 +86,14 @@ function About() {
         {/* Vision */}
         <section className="py-5 bg-white">
           <div className="container">
-            <h2 className="text-center mb-3">Our Vision</h2>
+            <div className="text-center mb-4">
+              <div className="badge-pill mb-2">Our Vision</div>
+              <h2 className="mb-2">A future where youth lead</h2>
+            </div>
             <div className="row justify-content-center">
               <div className="col-12 col-md-10 col-lg-8">
                 <p className="text-center mb-4">
-                  We envision a world where every young person, regardless of
-                  background, has the confidence, support, and opportunity to
-                  rise as a leader, serve their community, and help build a more
-                  just, equitable, and compassionate society.
+                  We envision a world where every young person, regardless of background, has the confidence, support, and opportunity to lead, serve, and build a more just, equitable, and compassionate society.
                 </p>
               </div>
             </div>
@@ -100,9 +105,9 @@ function About() {
                   href="/api/pdf/4"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-warning btn-lg w-100 fw-bold"
+                  className="btn btn-donate-gradient w-100 fw-bold"
                 >
-                  WHY WE C.H.E.E.R.S. PDF
+                  Why We C.H.E.E.R.S. PDF
                 </a>
               </div>
             </div>

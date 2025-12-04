@@ -11,99 +11,144 @@ function GetInvolved() {
 
       <main className="get-involved-page ">
         {/* Hero image */}
-        <section className="bg-white">
-          <div className="container-fluid p-0">
+        <section className="position-relative mb-4">
+          <div className="cheers-hero">
             <img
               src={heroImg}
               alt="Youth at roundtable activity"
               className="img-fluid w-100"
             />
+            <div className="hero-overlay">
+              <div className="container">
+                <div className="hero-content">
+                  <span className="badge-pill mb-2">Get Involved</span>
+                  <h1 className="display-6 fw-bold mb-3">
+                    Volunteers, youth, partners—join the circle and uplift Worcester.
+                  </h1>
+                  <div className="d-flex flex-wrap gap-3">
+                    <a
+                      href="https://secure.qgiv.com/for/508cheers"
+                      className="btn btn-donate-gradient fw-bold"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Donate Now
+                    </a>
+                    <a
+                      href="https://example.com/volunteer-form"
+                      className="btn btn-outline-light"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Volunteer
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Main CTA + Volunteer + Newsletter */}
         <section className="py-5 bg-white">
           <div className="container">
-            <h2 className="text-center mb-3">C.H.E.E.R.S. With Us</h2>
-            <p className="text-center lead mb-4">
-              Join us in spreading C.H.E.E.R.S. across Worcester!
-              <br />
-              You can make a difference!
-            </p>
-
-            {/* Volunteer button */}
-            <div className="row justify-content-center mb-4">
-              <div className="col-12 col-md-6 col-lg-4">
-                <a
-                  href="https://example.com/volunteer-form"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-lg w-100"
-                  style={{ backgroundColor: "#7f4ffb", borderColor: "#7f4ffb" }}
-                >
-                  Volunteer Sign Up Form
-                </a>
-              </div>
+            <div className="text-center mb-4">
+              <div className="badge-pill mb-2">Join the Circle</div>
+              <h2 className="mb-2">C.H.E.E.R.S. With Us</h2>
+              <p className="lead mb-0">
+                Volunteers, youth, and partners all power our mission. Step in where you shine.
+              </p>
             </div>
 
-            <div className="row justify-content-center mb-4">
-              <div className="col-12 col-md-8">
-                <ul className="list-unstyled text-center mb-0">
-                  <li>
-                    Volunteer as a mentor, coach, team, or cooking instructor
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Newsletter sign-up */}
-            <div className="row justify-content-center mt-5">
-              <div className="col-12 col-md-6">
-                <h4 className="text-center mb-3">Newsletter Sign-up</h4>
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="newsletterEmail" className="form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="newsletterEmail"
-                      className="form-control"
-                      placeholder="example@example.com"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="newsletterName" className="form-label">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="newsletterName"
-                      className="form-control"
-                      placeholder="name"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{
-                      backgroundColor: "#7f4ffb",
-                      borderColor: "#7f4ffb",
-                    }}
+            <div className="row g-4">
+              <div className="col-12 col-lg-4">
+                <div className="form-card h-100">
+                  <h4 className="mb-2">Volunteer</h4>
+                  <p className="text-muted">
+                    Mentor, coach, cook, or support events. We’ll match you with a team or project.
+                  </p>
+                  <a
+                    href="https://example.com/volunteer-form"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-primary w-100"
                   >
-                    Submit
-                  </button>
-                </form>
+                    Volunteer Sign Up Form
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <div className="row justify-content-center mt-4">
-              <div className="col-12 col-md-8">
-                <ul className="list-unstyled text-center mb-0">
-                  <li className="mb-2">
-                    Subscribe to our newsletter to get updates and new info
-                  </li>
-                </ul>
+              <div className="col-12 col-lg-4">
+                <div className="form-card h-100">
+                  <h4 className="mb-2">Newsletter</h4>
+                  <p className="text-muted mb-3">
+                    Get youth stories, events, and mutual aid opportunities in your inbox.
+                  </p>
+                  <form>
+                    <div className="mb-2">
+                      <label htmlFor="newsletterEmail" className="form-label small">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="newsletterEmail"
+                        className="form-control"
+                        placeholder="example@example.com"
+                      />
+                    </div>
+                    <div className="mb-2">
+                      <label htmlFor="newsletterName" className="form-label small">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="newsletterName"
+                        className="form-control"
+                        placeholder="Name"
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="newsletterPhone" className="form-label small">
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        id="newsletterPhone"
+                        className="form-control"
+                        placeholder="(###) ###-####"
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100">
+                      Subscribe
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div className="col-12 col-lg-4">
+                <div className="form-card h-100">
+                  <h4 className="mb-2">Contact</h4>
+                  <p className="text-muted mb-3">
+                    Have a question, idea, or partnership? Reach out and we’ll reply soon.
+                  </p>
+                  <form>
+                    <div className="mb-2">
+                      <label className="form-label small">Name</label>
+                      <input type="text" className="form-control" placeholder="Your name" />
+                    </div>
+                    <div className="mb-2">
+                      <label className="form-label small">Email</label>
+                      <input type="email" className="form-control" placeholder="you@example.com" />
+                    </div>
+                    <div className="mb-2">
+                      <label className="form-label small">Message</label>
+                      <textarea className="form-control" rows="2" placeholder="How can we help?" />
+                    </div>
+                    <button type="submit" className="btn btn-outline-primary w-100">
+                      Send
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -126,12 +171,12 @@ function GetInvolved() {
             <div className="row justify-content-center mb-4">
               <div className="col-12 col-md-6 col-lg-4">
                 <a
-                  href="https://www.paypal.com/donate/YOURLINK"
+                  href="https://secure.qgiv.com/for/508cheers"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline-primary btn-lg w-100"
                 >
-                    — DONATE NOW —
+                  — DONATE NOW —
                 </a>
               </div>
             </div>

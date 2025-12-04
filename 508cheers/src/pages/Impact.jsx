@@ -1,66 +1,164 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import youthGroup from "../assets/imgs/banner.png";
 
+const FACEBOOK_PAGE_URL = "https://www.facebook.com/508cheers/";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "http://localhost:3000" : "")
+).replace(/\/$/, "");
+
 function Impact() {
+  const [fbPosts, setFbPosts] = useState([]);
+  const [fbStatus, setFbStatus] = useState("loading");
+  const [fbError, setFbError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadPosts() {
+      setFbStatus("loading");
+      setFbError("");
+      try {
+        const res = await fetch(
+          `${API_BASE_URL}/api/facebook/posts?limit=3`
+        );
+        if (!res.ok) {
+          throw new Error(`Request failed (${res.status})`);
+        }
+        const data = await res.json();
+        if (!cancelled) {
+          setFbPosts(Array.isArray(data?.data) ? data.data : []);
+          setFbStatus("success");
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setFbStatus("error");
+          setFbError("We couldn't load Facebook posts right now.");
+          console.error("facebook posts fetch error", err);
+        }
+      }
+    }
+    loadPosts();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const formatDate = (iso) =>
+    iso ? new Date(iso).toLocaleDateString(undefined, { dateStyle: "medium" }) : "";
+
+  const trimText = (text, len = 180) => {
+    if (!text) return "";
+    return text.length > len ? `${text.slice(0, len).trim()}…` : text;
+  };
+
   return (
     <>
       <Navbar />
 
-      <main className="impact-page mt-4">
-        {/* Hero video + title */}
-        <section className="py-4 bg-light">
-          <div className="container">
-            <h2 className="text-center mb-3">
-              What are Our Youth Saying About 508 C.H.E.E.R.S.?
-            </h2>
-
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-8">
-                <div className="ratio ratio-16x9">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/i366kX_JbyI?si=brqpZZuoO5TDWulM"
-                            title="YouTube video player" frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen></iframe>
+      <main className="impact-page">
+        {/* Hero */}
+        <section className="position-relative mb-4">
+          <div className="cheers-hero">
+            <img src={youthGroup} alt="Youth cheering" className="d-block w-100" />
+            <div className="hero-overlay">
+              <div className="container">
+                <div className="hero-content">
+                  <span className="badge-pill mb-2">Impact in Motion</span>
+                  <h1 className="display-6 fw-bold mb-3">
+                    Meals served, voices raised, youth leading Worcester.
+                  </h1>
+                  <div className="d-flex flex-wrap gap-3">
+                    <a
+                      href="https://secure.qgiv.com/for/508cheers"
+                      className="btn btn-donate-gradient fw-bold"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Donate to Fuel Our Impact
+                    </a>
+                    <a
+                      href={FACEBOOK_PAGE_URL}
+                      className="btn btn-outline-light"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Follow on Facebook
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-          {/* Stats strip */}
-          <section className="py-4 bg-primary text-white text-center">
-              <div className="container">
-                  <div className="row gy-3">
-                      <div className="col-12 col-md-4">
-                      <h3 className="mb-1">+99</h3>
-                <p className="mb-0">Meals Served Monthly</p>
+        {/* Stats strip */}
+        <section className="py-4 bg-stone text-center">
+          <div className="container">
+            <div className="stat-grid">
+              <div className="stat-tile">
+                <h3 className="mb-1 text-primary">+99</h3>
+                <p className="mb-0 text-muted">Meals Served Monthly</p>
               </div>
-              <div className="col-12 col-md-4">
-                <h3 className="mb-1">+1200</h3>
-                <p className="mb-0">Community members fed annually.</p>
+              <div className="stat-tile">
+                <h3 className="mb-1 text-primary">+1200</h3>
+                <p className="mb-0 text-muted">Community Members Fed Annually</p>
               </div>
-              <div className="col-12 col-md-4">
-                <h3 className="mb-1">$1</h3>
-                <p className="mb-0">
-                  Join the Dance Circle with a small donation.
-                </p>
+              <div className="stat-tile">
+                <h3 className="mb-1 text-primary">+4</h3>
+                <p className="mb-0 text-muted">Youth-Led Mutual Aid Projects Active</p>
+              </div>
+              <div className="stat-tile">
+                <h3 className="mb-1 text-primary">$1</h3>
+                <p className="mb-0 text-muted">Join the Dance Circle with a small donation</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Group image */}
-        <section className="bg-white">
-          <div className="container-fluid p-0">
-            <img
-              src={youthGroup}
-              alt="Youth group"
-              className="img-fluid w-100"
-            />
+        {/* Video + ticker */}
+        <section className="py-5 bg-white">
+          <div className="container">
+            <div className="row g-4 align-items-center">
+              <div className="col-12 col-lg-7">
+                <div className="section-card h-100">
+                  <div className="ratio ratio-16x9 mb-3">
+                    <iframe
+                      src="https://www.youtube.com/embed/i366kX_JbyI?si=brqpZZuoO5TDWulM"
+                      title="Youth voices video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <h3 className="h5">What our youth are saying</h3>
+                  <p className="text-muted mb-0">
+                    Hear the impact straight from the youth leading change in Worcester.
+                  </p>
+                </div>
+              </div>
+              <div className="col-12 col-lg-5">
+                <div className="form-card h-100">
+                  <h4 className="mb-3">Meals to Date</h4>
+                  <div className="stat-tile mb-3">
+                    <h2 className="mb-1 text-primary">12,345</h2>
+                    <p className="mb-0 text-muted">Meals prepared and shared</p>
+                  </div>
+                  <p className="text-muted mb-3">
+                    Every donation keeps the kitchen moving. Help us reach the next 1,000 meals.
+                  </p>
+                  <a
+                    href="https://secure.qgiv.com/for/508cheers"
+                    className="btn btn-donate-gradient w-100 fw-bold"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Donate a Meal
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -121,90 +219,84 @@ function Impact() {
             <h2 className="text-center mb-4">Look at How we Cheer!</h2>
 
             <div className="row gy-4">
-              {/* Video 1 */}
-              <div className="col-12 col-md-6">
-                <div className="card h-100">
+              {/* Facebook timeline */}
+              <div className="col-12 col-lg-6">
+                <div className="card h-100 shadow-soft">
                   <div className="card-body">
-                    <div className="ratio ratio-16x9 mb-3">
-                        <iframe width="560" height="315"
-                                src="https://www.youtube.com/embed/xzsryZsduLQ?si=6AE3m15Zy7RQTFPx"
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen></iframe>
-                    </div>
-                      <h5 className="card-title">Fun! Fun! Fun!</h5>
-                      <p className="card-text">
-                          At 508 C.H.E.E.R.S. we didn&apos;t just learn how to
-                          better our community, we had a blast doing it!
-                      </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Story card */}
-              <div className="col-12 col-md-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      When the Jobs Disappear, the Voices Rise
-                    </h5>
+                    <h5 className="card-title">Follow us on Facebook</h5>
                     <p className="card-text">
-                      This spring, funding cuts to YouthWorks left dozens of
-                      Worcester youth without jobs and without the opportunities
-                      they deserve. But instead of staying quiet, our youth at
-                      508 C.H.E.E.R.S. chose to speak up.
+                      See real-time updates, photos, and stories from 508 C.H.E.E.R.S.
                     </p>
-                    <p className="card-text mb-0">
-                      Together, they shared their stories, advocated for change,
-                      and showed what youth power really looks like.
-                    </p>
+                    <a
+                      className="btn btn-donate-gradient"
+                      href={FACEBOOK_PAGE_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Facebook Page
+                    </a>
                   </div>
                 </div>
               </div>
 
-              {/* Video 2 */}
-              <div className="col-12 col-md-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="ratio ratio-16x9 mb-3">
-                        <iframe width="560" height="315"
-                                src="https://www.youtube.com/embed/0Q9-dQLuO9Q?si=NjSUfoeUq9OYKM68"
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen></iframe>
-                    </div>
-                      <h5 className="card-title">
-                          Hennessy Public Testimonies and Youth Voice
-                      </h5>
-                      <p className="card-text mb-0">
-                          Our youth advocate at City Council, School Committee, and
-                          State House meetings, making sure their voices are heard.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Photo / speaker */}
-              <div className="col-12 col-md-6">
-                <div className="card h-100">
-                  <div className="row g-0 h-100">
-                    <div className="col-12 col-sm-5">
-                      <img
-                        src="https://via.placeholder.com/400x300"
-                        alt="Youth speaking"
-                        className="img-fluid h-100 w-100 object-fit-cover"
-                      />
-                    </div>
-                    <div className="col-12 col-sm-7">
+              {/* Stories grid */}
+              <div className="col-12 col-lg-6">
+                <div className="row gy-4">
+                  <div className="col-12">
+                    <div className="card h-100 shadow-soft">
                       <div className="card-body">
-                        <h5 className="card-title">Our Youth, Our Leaders</h5>
-                        <p className="card-text mb-0">
-                          Youth from 508 C.H.E.E.R.S. share their stories at
-                          public hearings, reminding leaders that young people
-                          deserve a seat at the table.
+                        <div className="ratio ratio-16x9 mb-3">
+                          <iframe
+                            src="https://www.youtube.com/embed/xzsryZsduLQ?si=6AE3m15Zy7RQTFPx"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                        <h5 className="card-title">Fun! Fun! Fun!</h5>
+                        <p className="card-text">
+                          At 508 C.H.E.E.R.S. we didn&apos;t just learn how to better our
+                          community, we had a blast doing it!
                         </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="card h-100 shadow-soft">
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          When the Jobs Disappear, the Voices Rise
+                        </h5>
+                        <p className="card-text">
+                          Youth spoke up when funding cuts removed job opportunities—showing what youth power looks like.
+                        </p>
+                        <p className="card-text mb-0">
+                          They shared stories, advocated for change, and pushed leaders to listen.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="card h-100 shadow-soft">
+                      <div className="row g-0 h-100">
+                        <div className="col-12 col-sm-5">
+                          <img
+                            src={youthGroup}
+                            alt="Youth sharing stories"
+                            className="img-fluid h-100 w-100 object-fit-cover"
+                          />
+                        </div>
+                        <div className="col-12 col-sm-7">
+                          <div className="card-body">
+                            <h5 className="card-title">Our Youth, Our Leaders</h5>
+                            <p className="card-text mb-0">
+                              Youth remind leaders that young people deserve a seat at the table.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -224,59 +316,74 @@ function Impact() {
               Follow us on Facebook to see our latest updates.
             </p>
 
-            <h5 className="mb-3">News Posts</h5>
+            <h5 className="mb-3">Latest Facebook Posts</h5>
 
-            <div className="row gy-3">
-              <div className="col-12">
-                <div className="card shadow-sm">
-                  <div className="card-body">
-                    <h6 className="card-title mb-1">
-                      Community Partners Appreciation Breakfast
-                    </h6>
-                    <p className="card-text small mb-2">
-                      This morning, Youth Director Edith Collins welcomed us to
-                      the first-ever Community Partners Appreciation Breakfast…
-                    </p>
-                    <button className="btn btn-outline-secondary btn-sm">
-                      Read More
-                    </button>
-                  </div>
-                </div>
-              </div>
+            {fbStatus === "loading" && (
+              <p className="text-muted">Loading latest posts…</p>
+            )}
 
-              <div className="col-12">
-                <div className="card shadow-sm">
-                  <div className="card-body">
-                    <h6 className="card-title mb-1">
-                      Angels Answer, Inc. haul
-                    </h6>
-                    <p className="card-text small mb-2">
-                      We&apos;re so grateful to receive this care box from
-                      Angels Answer Inc., with the opportunity to pick up other
-                      items on site…
-                    </p>
-                    <button className="btn btn-outline-secondary btn-sm">
-                      Read More
-                    </button>
-                  </div>
-                </div>
+            {fbStatus === "error" && (
+              <div className="alert alert-warning" role="alert">
+                {fbError}{" "}
+                <a
+                  href={FACEBOOK_PAGE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="alert-link"
+                >
+                  View on Facebook
+                </a>
               </div>
+            )}
 
-              <div className="col-12">
-                <div className="card shadow-sm">
-                  <div className="card-body">
-                    <h6 className="card-title mb-1">Thanksgiving Meal Deals</h6>
-                    <p className="card-text small mb-2">
-                      This holiday season, our youth helped share meal deals
-                      with families throughout the city…
-                    </p>
-                    <button className="btn btn-outline-secondary btn-sm">
-                      Read More
-                    </button>
+            {fbStatus === "success" && fbPosts.length === 0 && (
+              <p className="text-muted mb-0">
+                No recent posts to show yet. Check back soon or{" "}
+                <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noreferrer">
+                  visit our Facebook page
+                </a>
+                .
+              </p>
+            )}
+
+            {fbPosts.length > 0 && (
+              <div className="row gy-4">
+                {fbPosts.map((post) => (
+                  <div className="col-12 col-lg-4" key={post.id}>
+                    <div className="card h-100 shadow-sm">
+                      {post.full_picture && (
+                        <img
+                          src={post.full_picture}
+                          className="card-img-top"
+                          alt="Facebook post"
+                        />
+                      )}
+                      <div className="card-body d-flex flex-column">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="badge bg-primary-subtle text-primary">
+                            Facebook
+                          </span>
+                          <small className="text-muted">
+                            {formatDate(post.created_time)}
+                          </small>
+                        </div>
+                        <p className="card-text flex-grow-1">
+                          {trimText(post.message || "Visit our Facebook page to read this post.")}
+                        </p>
+                        <a
+                          href={post.permalink_url || FACEBOOK_PAGE_URL}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-outline-primary btn-sm mt-2"
+                        >
+                          Read on Facebook
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            </div>
+            )}
           </div>
         </section>
 

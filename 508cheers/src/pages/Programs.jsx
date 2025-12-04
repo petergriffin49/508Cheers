@@ -1,200 +1,209 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import t1 from "../assets/imgs/img6.webp"
-import t2 from "../assets/imgs/img7.webp"
-import t3 from "../assets/imgs/img8.webp"
-import b1 from "../assets/imgs/img9.webp"
-import b2 from "../assets/imgs/img10.webp"
-import b3 from "../assets/imgs/img11.webp"
-
-
-
-
+import t1 from "../assets/imgs/img6.webp";
+import t2 from "../assets/imgs/img7.webp";
+import t3 from "../assets/imgs/img8.webp";
+import b1 from "../assets/imgs/img9.webp";
+import b2 from "../assets/imgs/img10.webp";
+import b3 from "../assets/imgs/img11.webp";
 
 function Programs() {
+  const youthPrograms = [
+    {
+      title: "Community Service, Advocacy & Equity",
+      copy:
+        "Youth-led projects uplifting unsheltered and underserved families through compassion and action.",
+    },
+    {
+      title: "Food Insecurity Sports Clinics",
+      copy:
+        "Train with local teams and donate food instead of fees—fueling food banks while building skills.",
+    },
+    {
+      title: "Cultural Cooking Program",
+      copy:
+        "Culinary skills and cultural traditions that nourish families and celebrate heritage.",
+    },
+    {
+      title: "Girls Mentorship",
+      copy:
+        "Mentorship, R.A.D. self-defense, and menstrual equity projects that build confidence and leadership.",
+    },
+    {
+      title: "Health, Wellness & Future Readiness",
+      copy:
+        "Mental health support, fitness, financial literacy, and career exploration to thrive personally and professionally.",
+    },
+    {
+      title: "Teen Trauma Tuesday & Wellness Wednesday",
+      copy:
+        "Youth-led virtual mental health sessions with Worcester ACTs—trauma-informed support and mindfulness.",
+    },
+  ];
+
+  const girlsFocus = [
+    {
+      title: "Build Strong Minds & Voices",
+      copy:
+        "Confidence, stress management, healthy relationships, and advocacy for menstrual equity and their dreams.",
+    },
+    {
+      title: "Empowered Inside and Out",
+      copy:
+        "Girls-only workouts and R.A.D. self-defense—practical skills to stay safe and strong.",
+    },
+    {
+      title: "Healthy Body, Healthy Habits",
+      copy:
+        "Women-led workouts, nutrition-focused cooking, and mentorship celebrating mind, body, and uniqueness.",
+    },
+  ];
+
   return (
     <>
       <Navbar />
 
-      <main className="py-4">
-        {/* Top Hero Images */}
-        <section className="container mb-4">
-          <div className="row g-3 justify-content-center text-center">
-            <div className="col-6 col-md-4">
-              <img
-                src={t1}
-                alt="Youth program 1"
-                className="img-fluid rounded-circle"
-              />
-            </div>
-            <div className="col-6 col-md-4">
-              <img
-                src={t2}
-                alt="Youth program 2"
-                className="img-fluid rounded-circle"
-              />
-            </div>
-            <div className="col-6 col-md-4 d-none d-md-block">
-              <img
-                src={t3}
-                alt="Youth program 3"
-                className="img-fluid rounded-circle"
-              />
+      <main className="pb-4">
+        {/* Hero */}
+        <section className="position-relative mb-5">
+          <div className="cheers-hero">
+            <img src={t1} className="d-block w-100" alt="Youth leading program" />
+            <div className="hero-overlay">
+              <div className="container">
+                <div className="hero-content">
+                  <span className="badge-pill mb-2">Programs that Nourish & Empower</span>
+                  <h1 className="display-6 fw-bold mb-3">
+                    Leadership, wellness, and advocacy—built by and for Worcester youth.
+                  </h1>
+                  <div className="d-flex flex-wrap gap-3">
+                    <a
+                      href="/api/pdf/3"
+                      className="btn btn-donate-gradient fw-bold"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Program Offerings PDF
+                    </a>
+                    <a
+                      href="https://secure.qgiv.com/for/508cheers"
+                      className="btn btn-outline-light"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Support the Programs
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Youth Program Offerings */}
         <section className="container mb-5">
-          <h2 className="fw-bold mb-4">Youth Program Offerings</h2>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">
-              Community Service, Advocacy &amp; Equity
-            </h4>
-            <p className="mb-0">
-              Volunteer-driven projects that uplift unsheltered and under-served
-              families through collaboration, compassion, and community action.
-            </p>
+          <div className="text-center mb-4">
+            <div className="badge-pill mb-2">For Youth & Community</div>
+            <h2 className="fw-bold">Youth Program Offerings</h2>
           </div>
 
-          <div className="mb-4">
-            <h4 className="fw-semibold">Food Insecurity Sports Clinics</h4>
-            <p className="mb-0">
-              Partnering with local high school &amp; college teams to offer
-              free training for youth. Instead of payment, youth bring food
-              donations; supporting community meals, food banks, and food
-              pantries while learning about food insecurity, accessing food
-              resources, and mutual aid.
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">Cultural Cooking Program</h4>
-            <p className="mb-0">
-              Youth learn culinary skills and cultural traditions while
-              preparing meals for families in need, promoting heritage, unity,
-              and wellness through food, storytelling, and community service.
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">Girls Mentorship</h4>
-            <p className="mb-0">
-              Mentorship, R.A.D. self-defense training, and menstrual equity
-              projects addressing period poverty and building confidence and
-              leadership.
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">
-              Health &amp; Wellness &amp; Future Readiness
-            </h4>
-            <p className="mb-0">
-              Building strong minds, bodies, and futures through mental health
-              support, fitness, financial literacy, and career exploration,
-              empowering youth to thrive personally and professionally.
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">
-              Teen Trauma Tuesday &amp; Wellness Wednesday
-            </h4>
-            <p className="mb-0">
-              Two youth-led virtual mental health programs in partnership with
-              Worcester ACTs, offering trauma-informed support and mindfulness
-              practices that help teens heal, grow, and build resilience.
-            </p>
+          <div className="row g-4">
+            {youthPrograms.map((item) => (
+              <div className="col-12 col-md-6" key={item.title}>
+                <div className="form-card h-100">
+                  <h5 className="fw-semibold mb-2">{item.title}</h5>
+                  <p className="text-muted mb-0">{item.copy}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="text-center mt-4">
             <a
               href="/api/pdf/3"
-              className="btn btn-warning btn-lg fw-semibold"
+              className="btn btn-donate-gradient fw-bold"
+              target="_blank"
+              rel="noreferrer"
             >
-              PROGRAM OFFERINGS PDF
+              Program Offerings PDF
             </a>
           </div>
         </section>
 
-        {/* Middle Images */}
-        <section className="container mb-4">
-          <div className="row g-3 justify-content-center text-center">
-            <div className="col-6 col-md-4">
-              <img
-                src={b1}
-                alt="Girls empowerment 1"
-                className="img-fluid rounded-circle"
-              />
+        {/* Video engagement */}
+        <section className="container mb-5">
+          <div className="row g-4">
+            <div className="col-12 col-lg-6">
+              <div className="section-card h-100">
+                <div className="ratio ratio-16x9 mb-3">
+                  <iframe
+                    src="https://www.youtube.com/embed/f7MMh8wfkAQ?si=lhVhqzXGtVBh0d2W"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <h4 className="fw-semibold mb-2">Mental Health Matters: Art Expression</h4>
+                <p className="text-muted mb-0">
+                  Youth name and navigate emotions while expressing themselves creatively.
+                </p>
+              </div>
             </div>
-            <div className="col-6 col-md-4">
-              <img
-                src={b2}
-                alt="Girls empowerment 2"
-                className="img-fluid rounded-circle"
-              />
-            </div>
-            <div className="col-6 col-md-4 d-none d-md-block">
-              <img
-                src={b3}
-                alt="Girls empowerment 3"
-                className="img-fluid rounded-circle"
-              />
+            <div className="col-12 col-lg-6">
+              <div className="section-card h-100">
+                <div className="ratio ratio-16x9 mb-3">
+                  <iframe
+                    src="https://www.youtube.com/embed/Uh2F8r3LMa4?si=qx-epiREmRKmaghm"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <h4 className="fw-semibold mb-2">Food Insecurity: Community Garden</h4>
+                <p className="text-muted mb-0">
+                  Growing, cooking, and sharing food while learning about access and mutual aid.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* C.H.E.E.R.S. for Girls Empowerment & Strength */}
+        {/* Girls empowerment */}
         <section className="container mb-5">
-          <h2 className="fw-bold text-center mb-3">
-            C.H.E.E.R.S. for Girls Empowerment &amp; Strength
-          </h2>
-
-          <div className="mb-4">
-            <h4 className="fw-semibold">Build Strong Minds &amp; Voices</h4>
-            <p className="mb-0">
-              Through engaging activities and meaningful discussions, we help
-              our girls to build confidence, recognize their strengths, and
-              develop essential life skills. By learning to speak up, manage
-              stress, build healthy relationships, serve their communities, and
-              connect with others, our girls grow into powerful advocates for
-              menstrual equity, for one another, and for their dreams.
-            </p>
+          <div className="text-center mb-4">
+            <div className="badge-pill mb-2">Girls Empowerment & Strength</div>
+            <h2 className="fw-bold">C.H.E.E.R.S. for Girls</h2>
           </div>
 
-          <div className="mb-4">
-            <h4 className="fw-semibold">Empowered Inside and Out</h4>
-            <p className="mb-0">
-              Our commitment to building strong minds extends to physical
-              well-being &amp; safety. Our girls only workouts, and Rape,
-              Aggression, Defense (R.A.D.) self-defense training empowers girls
-              with practical skills to protect themselves. By focusing on both
-              mental &amp; physical health, we create a comprehensive program
-              that supports the overall development of our participants.
-            </p>
+          <div className="row g-4">
+            {[b1, b2, b3].map((img, idx) => (
+              <div className="col-12 col-md-4" key={idx}>
+                <img src={img} alt={`Girls empowerment ${idx + 1}`} className="img-fluid rounded shadow-soft" />
+              </div>
+            ))}
           </div>
 
-          <div className="mb-4">
-            <h4 className="fw-semibold">Healthy Body, Healthy Habits</h4>
-            <p className="mb-0">
-              C.H.E.E.R.S. promotes positive body image by encouraging girls to
-              appreciate and care for their bodies. Our program features
-              women-led workouts, nutrition-focused cooking classes, and
-              hands-on mentorship to help girls build self-confidence and
-              develop a healthy relationship with their minds, emotions, and
-              uniqueness.
-            </p>
+          <div className="row g-4 mt-3">
+            {girlsFocus.map((item) => (
+              <div className="col-12 col-md-4" key={item.title}>
+                <div className="form-card h-100">
+                  <h5 className="fw-semibold mb-2">{item.title}</h5>
+                  <p className="text-muted mb-0">{item.copy}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="text-center mt-4">
             <a
               href="/api/pdf/2"
-              className="btn btn-warning btn-lg fw-semibold"
+              className="btn btn-donate-gradient fw-bold"
+              target="_blank"
+              rel="noreferrer"
             >
-              GIRLS EMPOWERMENT PROGRAM PDF
+              Girls Empowerment Program PDF
             </a>
           </div>
         </section>
