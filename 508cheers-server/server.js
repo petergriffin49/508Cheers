@@ -9,7 +9,7 @@ const multer = require("multer");
 const fs = require("fs");
 const env = require("dotenv").config();
 
-// app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
@@ -86,9 +86,28 @@ const partnerSchema = {
   },
 };
 const Partner = mongoose.model("Partner", partnerSchema);
+const directorSchema = {
+  name: { type: String, required: true },
+  role: { type: String, default: "" },
+  img: { type: String },
+};
+const Director = mongoose.model("Director", directorSchema);
+const contentSchema = {
+  key: { type: String, required: true, unique: true },
+  value: { type: String, default: "" },
+};
+const Content = mongoose.model("Content", contentSchema);
+
+function normalizeImgPath(pathStr) {
+  if (!pathStr) return pathStr;
+  if (pathStr.startsWith("/imgs/uploads/")) {
+    return pathStr.replace("/imgs/uploads/", "/uploads/");
+  }
+  return pathStr;
+}
 
 // File upload setup
-const uploadDir = path.join(__dirname, "public", "imgs", "uploads");
+const uploadDir = path.join(__dirname, "public", "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -170,15 +189,57 @@ app.post("/admin/login", (req, res) => {
 app.get("/admin/partners", requireAdmin, async (req, res) => {
   try {
     const partners = await Partner.find().sort({ name: 1 });
+    partners.forEach((p) => {
+      p.img = normalizeImgPath(p.img);
+    });
     res.json({ message: "success", data: partners });
   } catch (err) {
     res.status(500).json({ message: "error", data: err });
   }
 });
 
+// Latest Facebook posts (server-side fetch)
+app.get("/api/facebook/posts", async (req, res) => {
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+  const limit = Math.min(Number(req.query.limit) || 3, 10);
+
+  if (!pageId || !accessToken) {
+    return res
+      .status(501)
+      .json({ message: "Facebook API not configured on server" });
+  }
+
+  const url = new URL(`https://graph.facebook.com/v19.0/${pageId}/posts`);
+  url.searchParams.set(
+    "fields",
+    "message,created_time,permalink_url,full_picture"
+  );
+  url.searchParams.set("limit", limit.toString());
+  url.searchParams.set("access_token", accessToken);
+
+  try {
+    const fbRes = await fetch(url.toString());
+    const text = await fbRes.text();
+    if (!fbRes.ok) {
+      console.error("[facebook] fetch failed", fbRes.status, text);
+      return res
+        .status(500)
+        .json({ message: "Unable to fetch Facebook posts right now" });
+    }
+    const data = JSON.parse(text);
+    return res.json({ message: "success", data: data.data || [] });
+  } catch (err) {
+    console.error("[facebook] unexpected error", err);
+    return res
+      .status(500)
+      .json({ message: "Unable to fetch Facebook posts right now" });
+  }
+});
+
 app.post("/admin/partners", requireAdmin, upload.single("img"), async (req, res) => {
   const { name } = req.body || {};
-  const imgPath = req.file ? `/imgs/uploads/${req.file.filename}` : null;
+  const imgPath = req.file ? `/uploads/${req.file.filename}` : null;
   if (!name) {
     return res.status(400).json({ message: "Name is required" });
   }
@@ -193,7 +254,7 @@ app.post("/admin/partners", requireAdmin, upload.single("img"), async (req, res)
 app.put("/admin/partners/:id", requireAdmin, upload.single("img"), async (req, res) => {
   const { id } = req.params;
   const { name, keepExistingImg } = req.body || {};
-  const imgPath = req.file ? `/imgs/uploads/${req.file.filename}` : undefined;
+  const imgPath = req.file ? `/uploads/${req.file.filename}` : undefined;
 
   if (!name) {
     return res.status(400).json({ message: "Name is required" });
@@ -224,11 +285,115 @@ app.delete("/admin/partners/:id", requireAdmin, async (req, res) => {
   }
 });
 
+// Directors CRUD
+app.get("/admin/directors", requireAdmin, async (req, res) => {
+  try {
+    const directors = await Director.find().sort({ name: 1 });
+    directors.forEach((d) => {
+      d.img = normalizeImgPath(d.img);
+    });
+    res.json({ message: "success", data: directors });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+app.post("/admin/directors", requireAdmin, upload.single("img"), async (req, res) => {
+  const { name, role = "" } = req.body || {};
+  const imgPath = req.file ? `/uploads/${req.file.filename}` : null;
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
+  try {
+    const created = await Director.create({ name, role, img: imgPath });
+    res.status(201).json({ message: "success", data: created });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+app.put("/admin/directors/:id", requireAdmin, upload.single("img"), async (req, res) => {
+  const { id } = req.params;
+  const { name, role = "", keepExistingImg } = req.body || {};
+  const imgPath = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
+
+  const update = { name, role };
+  if (imgPath !== undefined) {
+    update.img = imgPath;
+  } else if (keepExistingImg === "false") {
+    update.img = null;
+  }
+
+  try {
+    const updated = await Director.findByIdAndUpdate(id, update, { new: true });
+    res.json({ message: "success", data: updated });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+app.delete("/admin/directors/:id", requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Director.findByIdAndDelete(id);
+    res.json({ message: "success" });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+// Admin content (key/value)
+app.get("/admin/content", requireAdmin, async (req, res) => {
+  try {
+    const all = await Content.find();
+    const map = {};
+    all.forEach((c) => {
+      map[c.key] = c.value;
+    });
+    res.json({ message: "success", data: map });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
+app.post("/admin/content", requireAdmin, async (req, res) => {
+  const { updates } = req.body || {};
+  if (!updates || typeof updates !== "object") {
+    return res.status(400).json({ message: "Invalid updates payload" });
+  }
+  try {
+    const keys = Object.keys(updates);
+    await Promise.all(
+      keys.map((key) =>
+        Content.findOneAndUpdate(
+          { key },
+          { key, value: updates[key] ?? "" },
+          { upsert: true, new: true }
+        )
+      )
+    );
+    const all = await Content.find();
+    const map = {};
+    all.forEach((c) => {
+      map[c.key] = c.value;
+    });
+    res.json({ message: "success", data: map });
+  } catch (err) {
+    res.status(500).json({ message: "error", data: err });
+  }
+});
+
 app.get("/get-all-partners", function (req, res) {
   // console.log("getting all partners...")
   Partner.find()
     .then((parts) => {
-      // console.log(parts);
+      parts.forEach((p) => {
+        p.img = normalizeImgPath(p.img);
+      });
       res.send({
         message: "success",
         data: parts,
@@ -240,4 +405,36 @@ app.get("/get-all-partners", function (req, res) {
         data: err,
       });
     });
+});
+
+app.get("/get-all-directors", function (req, res) {
+  Director.find()
+    .then((items) => {
+      items.forEach((d) => {
+        d.img = normalizeImgPath(d.img);
+      });
+      res.send({
+        message: "success",
+        data: items,
+      });
+    })
+    .catch((err) => {
+      res.send({
+        message: "error",
+        data: err,
+      });
+    });
+});
+
+app.get("/get-content", async (req, res) => {
+  try {
+    const all = await Content.find();
+    const map = {};
+    all.forEach((c) => {
+      map[c.key] = c.value;
+    });
+    res.send({ message: "success", data: map });
+  } catch (err) {
+    res.status(500).send({ message: "error", data: err });
+  }
 });
