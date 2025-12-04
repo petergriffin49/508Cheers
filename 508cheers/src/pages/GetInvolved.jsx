@@ -4,6 +4,10 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import heroImg from "../assets/imgs/img13.webp";
 
+const volunteer_form_link = "https://docs.google.com/forms/d/e/1FAIpQLSdzu2s-6hYkyRvfQtc9X88vKZzSsW14sZ4HSQ4zVAEhMQq4Sw/viewform?usp=sharing&ouid=114309284500192939204"
+const partner_form_link = "https://docs.google.com/forms/d/e/1FAIpQLSdSRpUhhvvDlBtKMhJ85Gg0DQBn03q1eNGpqsvMcHntVWjdMw/viewform?usp=publish-editor"
+
+
 function GetInvolved() {
   return (
     <>
@@ -41,7 +45,7 @@ function GetInvolved() {
                       Donate Now
                     </a>
                     <a
-                      href="https://example.com/volunteer-form"
+                      href={volunteer_form_link}
                       className="btn btn-outline-primary"
                       target="_blank"
                       rel="noreferrer"
@@ -57,7 +61,9 @@ function GetInvolved() {
 
         {/* Main CTA + Volunteer + Newsletter */}
         <section className="py-5 bg-white">
+
           <div className="container">
+
             <div className="text-center mb-4">
               <div className="badge-pill mb-2">Join the Circle</div>
               <h2 className="mb-2">C.H.E.E.R.S. With Us</h2>
@@ -71,10 +77,12 @@ function GetInvolved() {
                 <div className="form-card h-100">
                   <h4 className="mb-2">Volunteer</h4>
                   <p className="text-muted">
-                    Mentor, coach, cook, or support events. We’ll match you with a team or project.
+                      Join us for service projects, community events, meal making, mentorship activities,
+                      or program support. Volunteers help create safe,
+                      meaningful spaces for youth to grow and lead.
                   </p>
                   <a
-                    href="https://example.com/volunteer-form"
+                    href={volunteer_form_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-outline-primary w-100"
@@ -131,6 +139,29 @@ function GetInvolved() {
                 </div>
               </div>
 
+
+            <div className="col-12 col-lg-4">
+                <div className="form-card h-100">
+                    <h4 className="mb-2">Partner</h4>
+                    <p className="text-muted">
+                        Schools, youth organizations, community groups,
+                        and local businesses help bring our programming to life.
+                        Partnerships strengthen our reach, deepen our impact,
+                        and create powerful opportunities for youth.
+                    </p>
+                    <a
+                        href={volunteer_form_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-outline-primary w-100"
+                    >
+                        Partner Sign Up Form
+                    </a>
+                </div>
+            </div>
+
+
+                {/*
               <div className="col-12 col-lg-4">
                 <div className="form-card h-100">
                   <h4 className="mb-2">Contact</h4>
@@ -156,6 +187,8 @@ function GetInvolved() {
                   </form>
                 </div>
               </div>
+                */}
+
             </div>
           </div>
         </section>
