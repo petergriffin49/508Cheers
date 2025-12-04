@@ -1,6 +1,31 @@
 import React from "react";
 import logo_transparent from "../assets/imgs/logo-trans.png";
 
+async function handleNewsletterSignup(e) {
+    e.preventDefault(); // stop page reload
+    const email = e.target.elements.newsletterEmail.value.trim();
+    try {
+        const response = await fetch("/api/newsletter-sign-up", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ newsletterEmail: email })
+        });
+        if (!response.ok) {
+            const err = await response.text();
+            console.error("Signup error:", err);
+            alert("There was an error: " + err);
+            return;
+        }
+        alert("Successfully subscribed!");
+    } catch (err) {
+        console.error("Network error:", err);
+        alert("Network error — try again later.");
+    }
+}
+
+
 function Footer() {
   return (
     <footer className="footer-bg border-top mt-5 pt-5 pb-4">
@@ -66,19 +91,21 @@ function Footer() {
           {/* Right: Newsletter */}
 
           <div className="col-12 col-md-4 text-center text-md-start">
-              {/*
+
               <h5 className="fw-bold mb-3">Stay in the Loop</h5>
-            <form className="d-flex flex-column flex-sm-row gap-2">
+            <form onSubmit={handleNewsletterSignup}
+                   className="d-flex flex-column flex-sm-row gap-2">
               <input
                 type="email"
+                id="newsletterEmail"
                 className="form-control"
-                placeholder="Email"
+                placeholder="name@example.com"
               />
               <button type="submit" className="btn btn-primary px-4">
                 Submit
               </button>
             </form>
-            */}
+
             <div className="text-center text-md-start small text-muted mt-4">
               © 2025 C.H.E.E.R.S. All Rights Reserved.
             </div>

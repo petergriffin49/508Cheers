@@ -7,6 +7,31 @@ import heroImg from "../assets/imgs/img13.webp";
 const volunteer_form_link = "https://docs.google.com/forms/d/e/1FAIpQLSdzu2s-6hYkyRvfQtc9X88vKZzSsW14sZ4HSQ4zVAEhMQq4Sw/viewform?usp=sharing&ouid=114309284500192939204"
 const partner_form_link = "https://docs.google.com/forms/d/e/1FAIpQLSdSRpUhhvvDlBtKMhJ85Gg0DQBn03q1eNGpqsvMcHntVWjdMw/viewform?usp=publish-editor"
 
+async function handleNewsletterSignup(e) {
+    e.preventDefault(); // stop page reload
+    const email = e.target.elements.newsletterEmail.value.trim();
+    try {
+        const response = await fetch("/api/newsletter-sign-up", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ newsletterEmail: email })
+        });
+        if (!response.ok) {
+            const err = await response.text();
+            console.error("Signup error:", err);
+            alert("There was an error: " + err);
+            return;
+        }
+        alert("Successfully subscribed!");
+    } catch (err) {
+        console.error("Network error:", err);
+        alert("Network error — try again later.");
+    }
+}
+
+
 
 function GetInvolved() {
   return (
@@ -98,7 +123,7 @@ function GetInvolved() {
                   <p className="text-muted mb-3">
                     Get youth stories, events, and mutual aid opportunities in your inbox.
                   </p>
-                  <form>
+                  <form onSubmit={handleNewsletterSignup}>
                     <div className="mb-2">
                       <label htmlFor="newsletterEmail" className="form-label small">
                         Email
@@ -107,9 +132,10 @@ function GetInvolved() {
                         type="email"
                         id="newsletterEmail"
                         className="form-control"
-                        placeholder="example@example.com"
+                        placeholder="name@example.com"
                       />
                     </div>
+                      {/*
                     <div className="mb-2">
                       <label htmlFor="newsletterName" className="form-label small">
                         Name
@@ -132,6 +158,7 @@ function GetInvolved() {
                         placeholder="(###) ###-####"
                       />
                     </div>
+                    */}
                     <button type="submit" className="btn btn-primary w-100">
                       Subscribe
                     </button>

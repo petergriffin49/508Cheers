@@ -73,7 +73,7 @@ app.get("/pdf/:id", (req, res) => {
     });
 });
 
-// PARTNERS DATASET
+// PARTNERS
 const partnerSchema = {
   name: {
     type: String,
@@ -84,17 +84,20 @@ const partnerSchema = {
   },
 };
 const Partner = mongoose.model("Partner", partnerSchema);
+// DIRECTORS
 const directorSchema = {
   name: { type: String, required: true },
   role: { type: String, default: "" },
   img: { type: String },
 };
 const Director = mongoose.model("Director", directorSchema);
+// CONTENT
 const contentSchema = {
   key: { type: String, required: true, unique: true },
   value: { type: String, default: "" },
 };
 const Content = mongoose.model("Content", contentSchema);
+// PDFS
 const pdfSchema = new mongoose.Schema(
   {
     slot: { type: Number, required: true, unique: true, min: 1, max: 4 },
@@ -104,7 +107,7 @@ const pdfSchema = new mongoose.Schema(
   { timestamps: true }
 );
 const Pdf = mongoose.model("Pdf", pdfSchema);
-
+//
 function normalizeImgPath(pathStr) {
   if (!pathStr) return pathStr;
   if (pathStr.startsWith("/imgs/uploads/")) {
@@ -511,3 +514,36 @@ app.get("/get-content", async (req, res) => {
     res.status(500).send({ message: "error", data: err });
   }
 });
+
+// NEWSLETTER
+const newsletterSchema = {
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+};
+const Newsletter = mongoose.model("Newsletter", newsletterSchema);
+//
+app.post('/newsletter-sign-up', async function (req, res) {
+    console.log("Newsletter signing up...")
+    const newEmail = req.body.newsletterEmail;
+    console.log(newEmail);
+    try {
+        await Newsletter.create({
+            email: newEmail
+        });
+
+        res.redirect("/");
+    } catch (err) {
+
+        // Duplicate key error
+        if (err.code === 11000) {
+            console.log("already subscribed-")
+            return res.redirect("/?error_message=Email already subscribed");
+        }
+        console.log(err);
+        res.redirect(`/?error_message=${err}`);
+    }
+});
+

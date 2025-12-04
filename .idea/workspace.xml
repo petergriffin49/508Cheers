@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="45a08594-9a1e-46b2-86dc-e2eb1c3b053d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers-server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers-server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/components/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/components/Footer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/508cheers/src/pages/GetInvolved.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/GetInvolved.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1764085494999</updated>
       <workItem from="1764085496312" duration="15445000" />
-      <workItem from="1764862146031" duration="6650000" />
+      <workItem from="1764862146031" duration="9345000" />
     </task>
     <servers />
   </component>
