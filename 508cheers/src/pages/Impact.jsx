@@ -401,7 +401,7 @@ function Impact() {
         <section className="py-5 bg-light">
           <div className="container text-center">
             <a
-              href="/pdfs/mentorship-program.pdf"
+              href="/api/pdf/2"
               className="btn btn-warning btn-lg fw-bold px-4"
               target="_blank"
               rel="noopener noreferrer"

@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import t1 from "../assets/imgs/img6.webp";
+import t1 from "../assets/imgs/img6.jpg";
 import t2 from "../assets/imgs/img7.webp";
 import t3 from "../assets/imgs/img8.webp";
 import b1 from "../assets/imgs/img9.webp";
@@ -63,12 +63,11 @@ function Programs() {
   return (
     <>
       <Navbar />
-
       <main className="pb-4">
         {/* Hero */}
         <section className="position-relative mb-5">
           <div className="cheers-hero">
-            <img src={t1} className="d-block w-100" alt="Youth leading program" />
+            <img src={t1} className="d-block w-100 h-50" alt="Youth leading program" />
             <div className="hero-overlay">
               <div className="container">
                 <div className="hero-content">

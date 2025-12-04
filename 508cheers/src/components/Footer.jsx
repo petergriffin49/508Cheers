@@ -64,8 +64,10 @@ function Footer() {
           </div>
 
           {/* Right: Newsletter */}
+
           <div className="col-12 col-md-4 text-center text-md-start">
-            <h5 className="fw-bold mb-3">Stay in the Loop</h5>
+              {/*
+              <h5 className="fw-bold mb-3">Stay in the Loop</h5>
             <form className="d-flex flex-column flex-sm-row gap-2">
               <input
                 type="email"
@@ -76,6 +78,7 @@ function Footer() {
                 Submit
               </button>
             </form>
+            */}
             <div className="text-center text-md-start small text-muted mt-4">
               © 2025 C.H.E.E.R.S. All Rights Reserved.
             </div>

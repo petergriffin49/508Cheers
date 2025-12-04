@@ -25,32 +25,6 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-// OLD
-/*
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/public/homepage.html");
-});
-app.get("/programs", function (req, res) {
-  res.sendFile(__dirname + "/public/programs.html");
-});
-app.get("/impact", function (req, res) {
-  res.sendFile(__dirname + "/public/impact.html");
-});
-
-app.get("/pdf-fund", function (req, res) {
-  res.sendFile(__dirname + "/public/pdf-fundraiser.html");
-});
-app.get("/pdf-girls", function (req, res) {
-  res.sendFile(__dirname + "/public/pdf-girls.html");
-});
-app.get("/pdf-programs", function (req, res) {
-  res.sendFile(__dirname + "/public/pdf-programs.html");
-});
-app.get("/pdf-about", function (req, res) {
-  res.sendFile(__dirname + "/public/pdf-about.html");
-});
-*/
-
 // PDF PATh
 const pdfs = {
   1: "/data/pdfs/pdf1.pdf",

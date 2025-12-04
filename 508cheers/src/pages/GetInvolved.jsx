@@ -195,7 +195,7 @@ function GetInvolved() {
             <div className="row justify-content-center">
               <div className="col-12 col-md-6 col-lg-4">
                 <a
-                  href="/pdfs/ways-to-support.pdf"
+                  href="/api/pdf/1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-warning btn-lg w-100 fw-bold"
