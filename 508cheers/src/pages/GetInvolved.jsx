@@ -10,21 +10,27 @@ function GetInvolved() {
       <Navbar />
 
       <main className="get-involved-page ">
-        {/* Hero image */}
-        <section className="position-relative mb-4">
-          <div className="cheers-hero">
-            <img
-              src={heroImg}
-              alt="Youth at roundtable activity"
-              className="img-fluid w-100"
-            />
-            <div className="hero-overlay">
-              <div className="container">
-                <div className="hero-content">
+        {/* Hero intro */}
+        <section className="py-5">
+          <div className="container">
+            <div className="section-card shadow-soft">
+              <div className="row g-4 align-items-center">
+                <div className="col-12 col-lg-6">
+                  <img
+                    src={heroImg}
+                    alt="Youth at roundtable activity"
+                    className="img-fluid rounded shadow-soft"
+                    style={{ objectFit: "cover", width: "100%" }}
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
                   <span className="badge-pill mb-2">Get Involved</span>
-                  <h1 className="display-6 fw-bold mb-3">
+                  <h1 className="h3 fw-bold mb-3">
                     Volunteers, youth, partners—join the circle and uplift Worcester.
                   </h1>
+                  <p className="text-muted mb-3">
+                    Choose your path: give, volunteer, sign up for news, or send us a note.
+                  </p>
                   <div className="d-flex flex-wrap gap-3">
                     <a
                       href="https://secure.qgiv.com/for/508cheers"
@@ -36,7 +42,7 @@ function GetInvolved() {
                     </a>
                     <a
                       href="https://example.com/volunteer-form"
-                      className="btn btn-outline-light"
+                      className="btn btn-outline-primary"
                       target="_blank"
                       rel="noreferrer"
                     >

@@ -11,16 +11,26 @@ function About() {
 
       <main className="about-page">
         {/* Hero */}
-        <section className="position-relative mb-4">
-          <div className="cheers-hero">
-            <img src="/img/img1.webp" alt="Youth impact" className="d-block w-100" />
-            <div className="hero-overlay">
-              <div className="container">
-                <div className="hero-content">
-                  <span className="badge-pill mb-2">Why We C.H.E.E.R.S.</span>
-                  <h1 className="display-6 fw-bold mb-3">
+        <section className="py-5">
+          <div className="container">
+            <div className="section-card shadow-soft">
+              <div className="row g-4 align-items-center">
+                <div className="col-12 col-md-4 text-center">
+                  <img
+                    src={cheersLogo}
+                    alt="C.H.E.E.R.S. logo"
+                    className="img-fluid"
+                    style={{ maxHeight: "180px", objectFit: "contain" }}
+                  />
+                </div>
+                <div className="col-12 col-md-8">
+                  <div className="badge-pill mb-2">Why We C.H.E.E.R.S.</div>
+                  <h1 className="h3 fw-bold mb-3">
                     Youth mentorship, meals, and mutual aid—powered by Worcester youth voices.
                   </h1>
+                  <p className="text-muted mb-3">
+                    We nurture youth leadership through service, advocacy, and community care.
+                  </p>
                   <a
                     href="/api/pdf/4"
                     target="_blank"

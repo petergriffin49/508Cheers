@@ -59,16 +59,18 @@ function Impact() {
 
       <main className="impact-page">
         {/* Hero */}
-        <section className="position-relative mb-4">
-          <div className="cheers-hero">
-            <img src={youthGroup} alt="Youth cheering" className="d-block w-100" />
-            <div className="hero-overlay">
-              <div className="container">
-                <div className="hero-content">
-                  <span className="badge-pill mb-2">Impact in Motion</span>
-                  <h1 className="display-6 fw-bold mb-3">
+        <section className="py-5">
+          <div className="container">
+            <div className="section-card shadow-soft">
+              <div className="row g-4 align-items-center">
+                <div className="col-12 col-lg-7">
+                  <div className="badge-pill mb-2">Impact in Motion</div>
+                  <h1 className="h3 fw-bold mb-3">
                     Meals served, voices raised, youth leading Worcester.
                   </h1>
+                  <p className="text-muted mb-3">
+                    Your support fuels mentorship, meals, and mutual aid—all led by Worcester youth.
+                  </p>
                   <div className="d-flex flex-wrap gap-3">
                     <a
                       href="https://secure.qgiv.com/for/508cheers"
@@ -80,13 +82,21 @@ function Impact() {
                     </a>
                     <a
                       href={FACEBOOK_PAGE_URL}
-                      className="btn btn-outline-light"
+                      className="btn btn-outline-primary"
                       target="_blank"
                       rel="noreferrer"
                     >
                       Follow on Facebook
                     </a>
                   </div>
+                </div>
+                <div className="col-12 col-lg-5">
+                  <img
+                    src={youthGroup}
+                    alt="Youth cheering"
+                    className="img-fluid rounded shadow-soft"
+                    style={{ objectFit: "cover", width: "100%" }}
+                  />
                 </div>
               </div>
             </div>

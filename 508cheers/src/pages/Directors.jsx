@@ -46,30 +46,35 @@ function Directors() {
 
       <main className="directors-page">
         {/* Hero / Video */}
-        <section className="position-relative mb-4">
-          <div className="cheers-hero">
-            {videoUrl ? (
-              <div className="ratio ratio-21x9">
-                <iframe
-                  src={videoUrl}
-                  title="Board of Directors Video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ) : (
-              <div className="ratio ratio-21x9 bg-light d-flex align-items-center justify-content-center border">
-                <p className="fs-4 mb-0 text-muted text-center">(Board of Directors Video)</p>
-              </div>
-            )}
-            <div className="hero-overlay">
-              <div className="container">
-                <div className="hero-content">
-                  <span className="badge-pill mb-2">Board of Directors</span>
-                  <h1 className="display-6 fw-bold mb-3">
+        <section className="py-5">
+          <div className="container">
+            <div className="section-card shadow-soft">
+              <div className="row g-4">
+                <div className="col-12 col-lg-6">
+                  <div className="badge-pill mb-2">Board of Directors</div>
+                  <h1 className="h3 fw-bold mb-3">
                     Guiding the mission, championing youth leadership.
                   </h1>
+                  <p className="text-muted mb-0">
+                    Leaders and mentors ensuring our vision stays youth-led and community-centered.
+                  </p>
+                </div>
+                <div className="col-12 col-lg-6">
+                  {videoUrl ? (
+                    <div className="ratio ratio-16x9">
+                      <iframe
+                        src={videoUrl}
+                        title="Board of Directors Video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div className="ratio ratio-16x9 bg-light d-flex align-items-center justify-content-center border rounded">
+                      <p className="fs-5 mb-0 text-muted text-center">(Board of Directors Video)</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

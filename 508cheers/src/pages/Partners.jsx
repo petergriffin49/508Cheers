@@ -45,20 +45,18 @@ function Partners() {
 
       <main className="partners-page">
         {/* Hero */}
-        <section className="position-relative mb-4">
-          <div className="cheers-hero">
-            <img
-              src={partnersHero}
-              alt="Youth and partners at service project"
-              className="img-fluid w-100"
-            />
-            <div className="hero-overlay">
-              <div className="container">
-                <div className="hero-content">
-                  <span className="badge-pill mb-2">Community Partners</span>
-                  <h1 className="display-6 fw-bold mb-3">
+        <section className="py-5">
+          <div className="container">
+            <div className="section-card shadow-soft">
+              <div className="row g-4 align-items-center">
+                <div className="col-12 col-lg-6">
+                  <div className="badge-pill mb-2">Community Partners</div>
+                  <h1 className="h3 fw-bold mb-3">
                     Together with schools, teams, and businesses uplifting Worcester.
                   </h1>
+                  <p className="text-muted mb-3">
+                    Partnerships power youth-led service. Join the circle that fuels our impact.
+                  </p>
                   <a
                     href="https://secure.qgiv.com/for/508cheers"
                     className="btn btn-donate-gradient fw-bold"
@@ -67,6 +65,20 @@ function Partners() {
                   >
                     Donate to Support Partnerships
                   </a>
+                </div>
+                <div className="col-12 col-lg-6">
+                  <div className="row g-3">
+                    {[partnersHero, "/img/img5.webp", "/img/img3.webp"].map((img, idx) => (
+                      <div className="col-6" key={idx}>
+                        <img
+                          src={img}
+                          alt="Partners and youth"
+                          className="img-fluid rounded shadow-soft"
+                          style={{ minHeight: "140px", objectFit: "cover" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
