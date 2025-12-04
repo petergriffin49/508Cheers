@@ -25,10 +25,12 @@ const partnerSchema = {
 const Partner = mongoose.model("Partner", partnerSchema);
 
 // 👇 require the JSON file
-const partnersData = require("./partner_data.json"); 
+const partnersData = require("./data/json/partner_data.json"); 
 
 async function seedPartners() {
   try {
+    //delete everything. be careful.
+    await Partner.deleteMany({});
 
 
     const result = await Partner.insertMany(partnersData);

@@ -49,10 +49,10 @@ app.get("/pdf-about", function (req, res) {
 
 // PDF PATh
 const pdfs = {
-  1: "/pdfs/pdf1.pdf",
-  2: "pdfs/pdf2.pdf",
-  3: "pdfs/pdf3.pdf",
-  4: "pdfs/pdf4.pdf",
+  1: "/data/pdfs/pdf1.pdf",
+  2: "/data/pdfs/pdf2.pdf",
+  3: "/data/pdfs/pdf3.pdf",
+  4: "/data/pdfs/pdf4.pdf",
 };
 
 app.get("/pdf/:id", (req, res) => {
