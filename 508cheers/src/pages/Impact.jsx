@@ -17,7 +17,7 @@ function Impact() {
 
         async function fetchPosts() {
             try {
-                const res = await fetch("http://localhost:3000/get-three-new-facebook-posts/");
+                const res = await fetch("api/get-three-new-facebook-posts/");
                 if (!res.ok) throw new Error("Failed fetching posts: " + res.status);
 
                 const data = await res.json();
