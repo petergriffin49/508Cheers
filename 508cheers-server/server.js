@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const multer = require("multer");
 const fs = require("fs");
 const env = require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -544,6 +545,25 @@ app.post('/newsletter-sign-up', async function (req, res) {
         }
         console.log(err);
         res.redirect(`/?error_message=${err}`);
+    }
+});
+
+app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) => {
+    console.log("posting newsletter...")
+    const { header, content = "" } = req.body || {};
+    if (!header) {
+        return res.status(400).json({ message: "Header is required" });
+    }
+    if (!content) {
+        return res.status(400).json({ message: "Content is required" });
+    }
+    try {
+        console.log(header);
+        console.log(content);
+
+        res.status(201).json({ message: "success", data: "Newsletter Sent!" });
+    } catch (err) {
+        res.status(500).json({ message: "error", data: err });
     }
 });
 

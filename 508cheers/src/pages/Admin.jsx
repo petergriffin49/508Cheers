@@ -22,7 +22,13 @@ function Admin() {
   });
   const [pdfs, setPdfs] = useState([]);
   const [pdfEdits, setPdfEdits] = useState({});
-  const [activeTab, setActiveTab] = useState("partners"); // partners | directors | content | pdfs
+  // partners | directors | content | pdfs | newsletter
+  const [activeTab, setActiveTab] = useState("partners");
+  const [newsletterForm, setNewsletterForm] = useState({
+        header: "",
+        content: "",
+        // file: null,
+  });
   const isAuthed = Boolean(token);
 
   useEffect(() => {
@@ -282,6 +288,41 @@ function Admin() {
     }
   }
 
+    async function handleAddNewsletter(e) {
+        e.preventDefault();
+        if (!newsletterForm.header.trim()) {
+            setError("Header is required");
+            return;
+        }
+        if (!newsletterForm.content.trim()) {
+            setError("Content is required");
+            return;
+        }
+        setStatus("loading");
+        try {
+            const fd = new FormData();
+            fd.append("header", newsletterForm.header.trim());
+            fd.append("content", newsletterForm.content.trim());
+            //fd.append("pdf", newsletterForm.file);
+            const res = await fetch("/api/admin/newsletter", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: fd,
+            });
+            const data = await res.json();
+            if (!res.ok || data.message !== "success") {
+                throw new Error(data.message || "Could not create newsletter");
+            }
+            setNewsletterForm({ header: "", content:""});//file: null
+            alert("Newsletter Sent Successfully!");
+        } catch (err) {
+            setError(err.message);
+            setStatus("error - no response");
+        }
+    }
+
   async function handleDeleteDirector(id) {
     if (!window.confirm("Delete this director?")) return;
     try {
@@ -380,6 +421,13 @@ function Admin() {
                   >
                     PDFs
                   </button>
+                    <button
+                        className={`btn ${activeTab === "newsletter" ? "btn-warning" : "btn-outline-secondary"}`}
+                        type="button"
+                        onClick={() => setActiveTab("newsletter")}
+                    >
+                        Newsletter
+                    </button>
                 </div>
 
                 {activeTab === "partners" && (
@@ -703,6 +751,61 @@ function Admin() {
                     </div>
                   </>
                 )}
+
+                {activeTab === "newsletter" && (
+                    <>
+                    {status === "loading" && (
+                        <div className="text-center text-muted">Loading...</div>
+                    )}
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    )}
+                        <form className="row g-2 mb-4" onSubmit={handleAddNewsletter}>
+                            <div className="col-12 col-md-4">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Header"
+                                    value={newsletterForm.header}
+                                    onChange={(e) =>
+                                        setNewsletterForm((f) => ({ ...f, header: e.target.value }))
+                                    }
+                                />
+                            </div>
+                            <div className="col-12 col-md-4">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Content"
+                                    value={newsletterForm.content}
+                                    onChange={(e) =>
+                                        setNewsletterForm((f) => ({ ...f, content: e.target.value }))
+                                    }
+                                />
+                            </div>
+                            {/*
+                            <div className="col-12 col-md-3">
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    accept=".pdf"
+                                    onChange={(e) =>
+                                        setNewsletterForm((f) => ({ ...f, file: e.target.files?.[0] || null }))
+                                    }
+                                />
+                            </div>
+                            */}
+                            <div className="col-12 col-md-2">
+                                <button className="btn btn-success w-100" type="submit" disabled={status === "loading"}>
+                                    Send Newsletter
+                                </button>
+                            </div>
+                        </form>
+                    </>
+                )}
+
               </>
             )}
           </div>
