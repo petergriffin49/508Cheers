@@ -11,6 +11,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "apify-client": "^2.20.0",
     "body-parser": "^2.2.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -22,6 +23,8 @@
     "nodemailer": "^7.0.11",
     "path": "^0.12.7",
     "pdf2html": "^4.4.0",
-    "pdftohtmljs": "^0.6.0"
-  }
+    "pdftohtmljs": "^0.6.0",
+    "node-schedule": "^2.1.1"
+  },
+  "keywords": []
 }

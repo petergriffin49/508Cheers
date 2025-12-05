@@ -2,56 +2,46 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import youthGroup from "../assets/imgs/banner.png";
+import Post from "../components/fbPosts.jsx";
 
 const FACEBOOK_PAGE_URL = "https://www.facebook.com/508cheers/";
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.DEV ? "http://localhost:3000" : "")
-).replace(/\/$/, "");
 
 function Impact() {
   const [fbPosts, setFbPosts] = useState([]);
   const [fbStatus, setFbStatus] = useState("loading");
   const [fbError, setFbError] = useState("");
 
-  useEffect(() => {
-    let cancelled = false;
-    async function loadPosts() {
-      setFbStatus("loading");
-      setFbError("");
-      try {
-        const res = await fetch(
-          `${API_BASE_URL}/api/facebook/posts?limit=3`
-        );
-        if (!res.ok) {
-          throw new Error(`Request failed (${res.status})`);
-        }
-        const data = await res.json();
-        if (!cancelled) {
-          setFbPosts(Array.isArray(data?.data) ? data.data : []);
-          setFbStatus("success");
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setFbStatus("error");
-          setFbError("We couldn't load Facebook posts right now.");
-          console.error("facebook posts fetch error", err);
-        }
-      }
-    }
-    loadPosts();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    useEffect(() => {
+        let cancelled = false;
 
-  const formatDate = (iso) =>
-    iso ? new Date(iso).toLocaleDateString(undefined, { dateStyle: "medium" }) : "";
 
-  const trimText = (text, len = 180) => {
-    if (!text) return "";
-    return text.length > len ? `${text.slice(0, len).trim()}…` : text;
-  };
+        async function fetchPosts() {
+            try {
+                const res = await fetch("http://localhost:3000/get-three-new-facebook-posts/");
+                if (!res.ok) throw new Error("Failed fetching posts: " + res.status);
+
+                const data = await res.json();
+
+                console.log(data);
+                if (!cancelled) {
+                    if (data.success === true) {
+                        setFbPosts(data.posts);
+                        console.log(data.posts);
+                        setFbStatus("success");
+                    } else {
+                        setFbStatus("error");
+                        setFbError("We couldn't load Facebook posts right now.");
+                    }
+                }
+            } catch (err) {
+                if (!cancelled) console.error("facebook posts fetch error", err);
+            }
+        }
+
+        fetchPosts();
+
+        return () => { cancelled = true };
+    }, []);
 
   return (
     <>
@@ -152,7 +142,7 @@ function Impact() {
                 <div className="form-card h-100">
                   <h4 className="mb-3">Meals to Date</h4>
                   <div className="stat-tile mb-3">
-                    <h2 className="mb-1 text-primary">12,345</h2>
+                    <h2 className="mb-1 text-primary">2,400</h2>
                     <p className="mb-0 text-muted">Meals prepared and shared</p>
                   </div>
                   <p className="text-muted mb-3">
@@ -237,6 +227,37 @@ function Impact() {
                     <p className="card-text">
                       See real-time updates, photos, and stories from 508 C.H.E.E.R.S.
                     </p>
+                      {fbStatus === "loading" && (
+                          <p className="text-muted">Loading latest posts…</p>
+                      )}
+
+                      {fbStatus === "error" && (
+                          <div className="alert alert-warning" role="alert">
+                              {fbError}{" "}
+                              <a
+                                  href={FACEBOOK_PAGE_URL}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="alert-link"
+                              >
+                                  View on Facebook
+                              </a>
+                          </div>
+                      )}
+
+                      {fbStatus === "success" && fbPosts.length === 0 && (
+                          <p className="text-muted mb-0">
+                              No recent posts to show yet. Check back soon or{" "}
+                              <a href={FACEBOOK_PAGE_URL} target="_blank" rel="noreferrer">
+                                  visit our Facebook page
+                              </a>
+                              .
+                          </p>
+                      )}
+
+                      {fbPosts.length > 0 && (
+                          <Post post={fbPosts[0]} />
+                      )}
                     <a
                       className="btn btn-donate-gradient"
                       href={FACEBOOK_PAGE_URL}
@@ -357,42 +378,9 @@ function Impact() {
             )}
 
             {fbPosts.length > 0 && (
-              <div className="row gy-4">
-                {fbPosts.map((post) => (
-                  <div className="col-12 col-lg-4" key={post.id}>
-                    <div className="card h-100 shadow-sm">
-                      {post.full_picture && (
-                        <img
-                          src={post.full_picture}
-                          className="card-img-top"
-                          alt="Facebook post"
-                        />
-                      )}
-                      <div className="card-body d-flex flex-column">
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                          <span className="badge bg-primary-subtle text-primary">
-                            Facebook
-                          </span>
-                          <small className="text-muted">
-                            {formatDate(post.created_time)}
-                          </small>
-                        </div>
-                        <p className="card-text flex-grow-1">
-                          {trimText(post.message || "Visit our Facebook page to read this post.")}
-                        </p>
-                        <a
-                          href={post.permalink_url || FACEBOOK_PAGE_URL}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="btn btn-outline-primary btn-sm mt-2"
-                        >
-                          Read on Facebook
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                fbPosts.map((post, idx) => (
+                    (idx !== 0)? <Post post={post} /> : null
+                ))
             )}
           </div>
         </section>

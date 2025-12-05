@@ -9,6 +9,8 @@ const multer = require("multer");
 const fs = require("fs");
 const env = require("dotenv").config();
 const nodemailer = require("nodemailer");
+const {ApifyClient} = require("apify-client");
+const schedule = require('node-schedule');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,6 +27,10 @@ mongoose
     console.log("--Database Connected");
   })
   .catch((err) => console.log(err));
+
+const client = new ApifyClient({
+    token: `${process.env.APIFY_TOKEN}`
+});
 
 // PDF PATh
 const pdfs = {
@@ -108,7 +114,79 @@ const pdfSchema = new mongoose.Schema(
   { timestamps: true }
 );
 const Pdf = mongoose.model("Pdf", pdfSchema);
-//
+//FACEBOOK
+const fbPostSchema = new mongoose.Schema(
+    {
+        postId: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        text: {
+            type: String,
+            default: ''
+        },
+        time: {
+            type: Date,
+            required: true
+        },
+        media: [
+            {
+                thumbnail: String,
+                url: String,
+                __typename: String, // "Photo", "Video", "GenericAttachmentMedia"
+                is_playable: Boolean,
+                id: String,
+                ocrText: String,
+                // Store ALL possible image locations (FB is inconsistent!)
+                image: mongoose.Schema.Types.Mixed,      // Could be {uri, height, width}
+                photo_image: mongoose.Schema.Types.Mixed, // Alternative location
+                // Store the "best" image URL we find (computed during save)
+                bestImageUrl: String
+            }
+        ],
+        user: {
+            id: String,
+            name: String,
+            profileUrl: String,
+            profilePic: String
+        },
+        textReferences: [
+            {
+                id: String,
+                url: String,
+                short_name: String,
+                profile_url: String
+            }
+        ]
+    },
+    {
+        timestamps: true
+    }
+);
+
+// Index for faster queries
+fbPostSchema.index({ time: -1 });
+
+const FbPost = mongoose.model('FbPost', fbPostSchema);
+
+function extractBestImageUrl(mediaItem) {
+    if (!mediaItem) return null;
+
+    return (
+        mediaItem.image?.uri ||
+        mediaItem.photo_image?.uri ||
+        mediaItem.thumbnail ||
+        mediaItem.url ||
+        null
+    );
+}
+
+
 function normalizeImgPath(pathStr) {
   if (!pathStr) return pathStr;
   if (pathStr.startsWith("/imgs/uploads/")) {
@@ -181,6 +259,96 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+async function scrapeFacebookPosts() {
+
+    try {
+        // Run the Apify actor
+        const run = await client.actor(process.env.APIFY_ACTOR).call({
+            captionText: false,
+            resultsLimit: 3,
+            startUrls: [
+                {url: "https://www.facebook.com/508cheers/"}
+            ]
+        });
+
+        const datasetId = run.defaultDatasetId;
+        if (!datasetId) {
+            throw new Error("Actor did not produce a dataset");
+        }
+
+        const {items} = await client.dataset(datasetId).listItems();
+
+        await FbPost.deleteMany({});
+
+        const savedPosts = [];
+        for (const item of items) {
+            try {
+                //The media section isn't well documented and seems to vary by each post so I tried processising it here
+                const processedMedia = item.media ? item.media
+                        .filter(m => m.__typename) // Only include items with a type
+                        .map(m => {
+                            const bestImageUrl = extractBestImageUrl(m);
+
+                            return {
+                                thumbnail: m.thumbnail,
+                                url: m.url,
+                                __typename: m.__typename,
+                                is_playable: m.is_playable || false,
+                                id: m.id,
+                                ocrText: m.ocrText,
+                                // Store raw data (flexible schema)
+                                image: m.image || null,
+                                photo_image: m.photo_image || null,
+                                // Store computed best URL for easy frontend access
+                                bestImageUrl: bestImageUrl,
+                                owner: m.owner || null
+                            };
+                        })
+                        .filter(m => m.bestImageUrl || m.__typename === 'Video') // Only keep media with images or videos
+                    : [];
+
+                const postData = {
+                    postId: item.postId,
+                    url: item.url,
+                    text: item.text || '',
+                    time: new Date(item.time),
+                    media: processedMedia,
+                    user: item.user ? {
+                        id: item.user.id,
+                        name: item.user.name,
+                        profileUrl: item.user.profileUrl,
+                        profilePic: item.user.profilePic
+                    } : null,
+                    textReferences: item.textReferences || []
+                };
+
+                const post = new FbPost(postData);
+                await post.save();
+                savedPosts.push(post);
+
+            } catch (err) {
+                console.error(`Error saving post ${item.postId}:`, err.message);
+            }
+        }
+
+        return savedPosts;
+
+    } catch (err) {
+        console.error('Scraping error:', err);
+        throw err;
+    }
+}
+
+// Runs daily at 12 AM or PM
+const job = schedule.scheduleJob('0 12 * * *', async function() {
+    console.log('Scheduled job triggered at:', new Date().toLocaleString());
+    try {
+        await scrapeFacebookPosts();
+    } catch (err) {
+        console.error('Scheduled job failed:', err);
+    }
+});
+
 // Admin login
 app.post("/admin/login", (req, res) => {
   const { password } = req.body || {};
@@ -210,42 +378,24 @@ app.get("/admin/partners", requireAdmin, async (req, res) => {
 });
 
 // Latest Facebook posts (server-side fetch)
-app.get("/api/facebook/posts", async (req, res) => {
-  const pageId = process.env.FACEBOOK_PAGE_ID;
-  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
-  const limit = Math.min(Number(req.query.limit) || 3, 10);
+app.get("/get-three-new-facebook-posts", async (req, res) => {
+    try {
+        const posts = await FbPost.find()
+            .sort({ timestamp: -1 })
 
-  if (!pageId || !accessToken) {
-    return res
-      .status(501)
-      .json({ message: "Facebook API not configured on server" });
-  }
-
-  const url = new URL(`https://graph.facebook.com/v19.0/${pageId}/posts`);
-  url.searchParams.set(
-    "fields",
-    "message,created_time,permalink_url,full_picture"
-  );
-  url.searchParams.set("limit", limit.toString());
-  url.searchParams.set("access_token", accessToken);
-
-  try {
-    const fbRes = await fetch(url.toString());
-    const text = await fbRes.text();
-    if (!fbRes.ok) {
-      console.error("[facebook] fetch failed", fbRes.status, text);
-      return res
-        .status(500)
-        .json({ message: "Unable to fetch Facebook posts right now" });
+        res.json({
+            success: true,
+            count: posts.length,
+            posts: posts
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching posts',
+            error: err.message
+        });
     }
-    const data = JSON.parse(text);
-    return res.json({ message: "success", data: data.data || [] });
-  } catch (err) {
-    console.error("[facebook] unexpected error", err);
-    return res
-      .status(500)
-      .json({ message: "Unable to fetch Facebook posts right now" });
-  }
 });
 
 app.post("/admin/partners", requireAdmin, upload.single("img"), async (req, res) => {
