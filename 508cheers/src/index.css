@@ -274,8 +274,8 @@ a {
 
 .badge-pill {
   display: inline-block;
-  background: rgba(22, 201, 141, 0.18);
-  color: #e9fff7;
+  background: rgb(63, 172, 86);
+  color: #ffffff;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
   letter-spacing: 0.04em;

@@ -676,6 +676,42 @@ const newsletterSchema = {
 };
 const Newsletter = mongoose.model("Newsletter", newsletterSchema);
 //
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+    }
+});
+//
+async function sendNewsletterEmail(subject, htmlContent) {
+    try {
+        // 1. Get all email addresses from database
+        const subscribers = await Newsletter.find({}, "email");
+        if (subscribers.length === 0) {
+            console.log("No subscribers found.");
+            return;
+        }
+
+        const emailList = subscribers.map(sub => sub.email);
+
+        // 2. Define message
+        const mailOptions = {
+            from: process.env.MAIL_USER,
+            bcc: emailList,  // IMPORTANT: use BCC so everyone’s email is hidden
+            subject: subject,
+            html: htmlContent
+        };
+
+        // 3. Send the email
+        const info = await transporter.sendMail(mailOptions);
+
+        console.log("Emails sent:", info.accepted.length);
+    } catch (err) {
+        console.error("Error sending newsletter:", err);
+    }
+}
+//
 app.post('/newsletter-sign-up', async function (req, res) {
     console.log("Newsletter signing up...")
     const newEmail = req.body.newsletterEmail;
@@ -697,7 +733,7 @@ app.post('/newsletter-sign-up', async function (req, res) {
         res.redirect(`/?error_message=${err}`);
     }
 });
-
+//
 app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) => {
     console.log("posting newsletter...")
     const { header, content = "" } = req.body || {};
@@ -708,10 +744,12 @@ app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) 
         return res.status(400).json({ message: "Content is required" });
     }
     try {
-        console.log(header);
-        console.log(content);
+        await sendNewsletterEmail(
+            header,
+            content
+        );
 
-        res.status(201).json({ message: "success", data: "Newsletter Sent!" });
+        res.status(201).json({ message: "success", data: "Newsletter Sent!"});
     } catch (err) {
         res.status(500).json({ message: "error", data: err });
     }

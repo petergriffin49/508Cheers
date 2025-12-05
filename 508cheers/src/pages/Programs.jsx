@@ -108,12 +108,13 @@ function Programs() {
 
           <div className="row g-4">
             {youthPrograms.map((item) => (
-              <div className="col-12 col-md-6" key={item.title}>
-                <div className="form-card h-100">
-                  <h5 className="fw-semibold mb-2">{item.title}</h5>
-                  <p className="text-muted mb-0">{item.copy}</p>
+                <div className="col-12 col-md-6" key={item.title}>
+                    <div className="form-card h-100 p-3 rounded-3 shadow-sm" style={{ backgroundColor: "#aad3ff" }}>
+                        <h5 className="fw-semibold mb-2">{item.title}</h5>
+                        <p className="text-muted mb-0">{item.copy}</p>
+                    </div>
                 </div>
-              </div>
+
             ))}
           </div>
 
@@ -136,16 +137,16 @@ function Programs() {
               <div className="section-card h-100">
                 <div className="ratio ratio-16x9 mb-3">
                   <iframe
-                    src="https://www.youtube.com/embed/f7MMh8wfkAQ?si=lhVhqzXGtVBh0d2W"
+                    src="https://www.youtube.com/embed/PHUM7bpt6GA?si=M3iZFNOTVDNDIujT"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                   ></iframe>
                 </div>
-                <h4 className="fw-semibold mb-2">Mental Health Matters: Art Expression</h4>
+                <h4 className="fw-semibold mb-2">Advocacy is Service</h4>
                 <p className="text-muted mb-0">
-                  Youth name and navigate emotions while expressing themselves creatively.
+                    Youth Keynote Speaker at the Youth Fusion 2025 Youth Conference
                 </p>
               </div>
             </div>
@@ -153,16 +154,16 @@ function Programs() {
               <div className="section-card h-100">
                 <div className="ratio ratio-16x9 mb-3">
                   <iframe
-                    src="https://www.youtube.com/embed/Uh2F8r3LMa4?si=qx-epiREmRKmaghm"
+                    src="https://www.youtube.com/embed/0Q9-dQLuO9Q?si=dAYyzhiazTY74Z6M"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                   ></iframe>
                 </div>
-                <h4 className="fw-semibold mb-2">Food Insecurity: Community Garden</h4>
+                <h4 className="fw-semibold mb-2">Youth Advocacy</h4>
                 <p className="text-muted mb-0">
-                  Growing, cooking, and sharing food while learning about access and mutual aid.
+                    Speaking on the Affordable Housing Crisis in City of Worcester
                 </p>
               </div>
             </div>

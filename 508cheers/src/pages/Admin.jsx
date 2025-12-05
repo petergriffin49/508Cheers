@@ -315,7 +315,8 @@ function Admin() {
             if (!res.ok || data.message !== "success") {
                 throw new Error(data.message || "Could not create newsletter");
             }
-            setNewsletterForm({ header: "", content:""});//file: null
+            setNewsletterForm({ header: "", content:""}); //file: null
+            setStatus("success");
             alert("Newsletter Sent Successfully!");
         } catch (err) {
             setError(err.message);
@@ -762,29 +763,36 @@ function Admin() {
                             {error}
                         </div>
                     )}
-                        <form className="row g-2 mb-4" onSubmit={handleAddNewsletter}>
+                        <form className="g-2 mb-4" onSubmit={handleAddNewsletter}>
                             <div className="col-12 col-md-4">
+                                <label htmlFor="headerBox">Subject:</label>
                                 <input
+                                    id="headerBox"
                                     type="text"
                                     className="form-control"
-                                    placeholder="Header"
+                                    placeholder="Plain text"
                                     value={newsletterForm.header}
                                     onChange={(e) =>
-                                        setNewsletterForm((f) => ({ ...f, header: e.target.value }))
+                                        setNewsletterForm((f) => ({...f, header: e.target.value}))
                                     }
                                 />
                             </div>
-                            <div className="col-12 col-md-4">
-                                <input
-                                    type="text"
+                            <br></br>
+                            <div className="col-12 col-md-6">
+                                <label for="contentBox">Email Content:</label>
+                                <textarea
+                                    id="contentBox"
                                     className="form-control"
-                                    placeholder="Content"
+                                    placeholder="Plain text or HTML"
                                     value={newsletterForm.content}
+                                    rows="6"
+                                    cols="50"
                                     onChange={(e) =>
-                                        setNewsletterForm((f) => ({ ...f, content: e.target.value }))
+                                        setNewsletterForm((f) => ({...f, content: e.target.value}))
                                     }
-                                />
+                                ></textarea>
                             </div>
+                            <br></br>
                             {/*
                             <div className="col-12 col-md-3">
                                 <input

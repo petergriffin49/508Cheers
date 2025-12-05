@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70cdb254-4bf4-412c-8a8f-c7a1efbb31b3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/508cheers/src/components/fbPosts.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/508cheers-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers-server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/508cheers-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers-server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/508cheers-server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers-server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/pages/About.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/About.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/pages/Admin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/Admin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/Home.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/508cheers/src/pages/Impact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/Impact.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/508cheers/src/pages/Programs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/508cheers/src/pages/Programs.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +36,12 @@
     &quot;assignee&quot;: &quot;sliperry&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/petergriffin49/508Cheers.git&quot;,
-    &quot;accountId&quot;: &quot;b4e8109d-92ca-44ab-828e-ca410b89d0c3&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/petergriffin49/508Cheers.git",
+    "accountId": "d2528d7e-0ff9-412c-9b52-9680ffe814ec"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -47,25 +50,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/capta/Documents/College/Web Design/508Cheers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-WS-252.25557.126" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-WS-252.28238.10" />
       </set>
     </attachedChunks>
   </component>
@@ -77,6 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1764863984490</updated>
       <workItem from="1764863985619" duration="21860000" />
+      <workItem from="1764963759784" duration="9815000" />
     </task>
     <servers />
   </component>

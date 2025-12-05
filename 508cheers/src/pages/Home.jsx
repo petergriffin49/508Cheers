@@ -105,7 +105,11 @@ function Home() {
         <div className="container">
           <div className="section-card text-center mb-4 shadow-soft">
             <img src="/img/logo.png" id="big-logo" alt="big logo" />
-            <div className="highlight-bar mb-2">What We C.H.E.E.R.S. For</div>
+            <a href="/api/pdf/4"
+               className="highlight-bar mb-2"
+               style={{ textDecoration: 'none' }}>
+                What We C.H.E.E.R.S. For
+            </a>
             <p className="text-muted mb-1">
               “When we GIVE, we GROW!”
             </p>
@@ -117,6 +121,48 @@ function Home() {
             ))}
           </div>
 
+            <div className="container">
+                <div className="text-center mb-4">
+                    <div className="badge-pill mb-2">Our Values</div>
+                    <h2 className="mb-2">How we C.H.E.E.R.S.</h2>
+                </div>
+                <div className="row justify-content-center text-start">
+                    <div className="col-12 col-md-10 col-lg-8">
+                        <p className="text-left mb-4">
+                            <h6>C- Community & Connection</h6> Creating opportunities for youth
+                            to lead projects that uplift the unsheltered, underserved, and
+                            local families in need.
+                        </p>
+                        <p className="text-left mb-4">
+                            <h6>H- Health & Wellness</h6> Promoting mental, emotional, and
+                            physical well-being through education, fitness, and self-care
+                            practices.
+                        </p>
+                        <p className="text-left mb-4">
+                            <h6>E- Equity & Empowerment</h6> Advocating for fairness, inclusion,
+                            and leadership among youth and community members.
+                        </p>
+                        <p className="text-left mb-4">
+                            <h6>E- Education & Enrichment</h6> Providing hands-on experiences in
+                            nutrition, cooking, career readiness, and civic engagement
+                            that inspire lifelong learning.
+                        </p>
+                        <p className="text-left mb-4">
+                            <h6>R- Resilience & Representation</h6>Encouraging youth to harness
+                            the power of their stories and lived experiences to advocate
+                            for change at City Hall, School Committee meetings, and the
+                            State House.
+                        </p>
+                        <p className="text-left mb-4">
+                            <h6>S- Sustainability & Service</h6>
+                            Building programs that address food insecurity and resource
+                            access through mutual aid, cultural food donations, and
+                            community partnerships.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {/*
           <div className="pillars-grid mb-5">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="pillar-card">
@@ -125,9 +171,10 @@ function Home() {
               </div>
             ))}
           </div>
+          */}
 
-          <div className="row g-4">
-            <div className="col-lg-6">
+          <div className="row g-5">
+            <div className="col-lg-4">
               <div className="section-card h-100">
                 <div className="ratio ratio-16x9 mb-3">
                   <iframe
@@ -144,7 +191,7 @@ function Home() {
                 </p>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-4">
               <div className="section-card h-100">
                 <div className="ratio ratio-16x9 mb-3">
                   <iframe
@@ -161,6 +208,23 @@ function Home() {
                 </p>
               </div>
             </div>
+              <div className="col-lg-4">
+                  <div className="section-card h-100">
+                      <div className="ratio ratio-16x9 mb-3">
+                          <iframe
+                              src="https://www.youtube.com/embed/Uqa_WvxXdl0?si=SoHDQ7UHXawiQpOR"
+                              title="YouTube video player"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              allowFullScreen
+                          ></iframe>
+                      </div>
+                      <h3 className="h5">Youth Advocacy</h3>
+                      <p className="text-muted mb-0">
+                          The importance of community and finding a place where you belong. 508 C.H.E.E.R.S. isn't just a place to go, it's a place to grow!
+                      </p>
+                  </div>
+              </div>
           </div>
 
           <div className="section-card mt-5 text-center">
@@ -169,9 +233,15 @@ function Home() {
               target="_blank"
               rel="noopener noreferrer"
               href={content.homeArticleLink}
+              className="btn btn-info"
             >
               Read the Telegram &amp; Gazette Article Here
             </a>
+            <p>
+                "Puello said. "I was getting into a lot of trouble at home and at school, I wasn't involved in my community, I can say that I was a bad kid."
+                Puello said she began to change when she became connected with 508 C.H.E.E.R.S. (Community Health Equity Empowerment Resources and Service),
+                a nonprofit group aimed at helping youth in the city discover the benefits of community service while providing a safe social circle for students after school."
+            </p>
             <img
               src="/img/img1.webp"
               alt="508 C.H.E.E.R.S. gives youth a second chance"

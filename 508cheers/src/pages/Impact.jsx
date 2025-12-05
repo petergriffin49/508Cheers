@@ -14,7 +14,6 @@ function Impact() {
     useEffect(() => {
         let cancelled = false;
 
-
         async function fetchPosts() {
             try {
                 const res = await fetch("api/get-three-new-facebook-posts/");
@@ -172,7 +171,7 @@ function Impact() {
 
             <div className="row gy-4">
               <div className="col-12 col-md-6">
-                <ul className="list-unstyled mb-0">
+                <ul className="mb-0">
                   <li className="mb-3">
                     Serve over 100 meals monthly to families and individuals
                     experiencing food insecurity, feeding over 1200 community
@@ -194,7 +193,7 @@ function Impact() {
               </div>
 
               <div className="col-12 col-md-6">
-                <ul className="list-unstyled mb-0">
+                <ul className="mb-0">
                   <li className="mb-3">
                     Create safe, inclusive spaces for young women to learn,
                     advocate, and grow.
@@ -216,7 +215,9 @@ function Impact() {
         {/* Look at How we Cheer! */}
         <section className="py-5 bg-light">
           <div className="container">
-            <h2 className="text-center mb-4">Look at How we Cheer!</h2>
+            <h2 className="text-center mb-4">
+                Look at How We CHEERS!
+            </h2>
 
             <div className="row gy-4">
               {/* Facebook timeline */}
