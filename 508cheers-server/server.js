@@ -114,6 +114,31 @@ const pdfSchema = new mongoose.Schema(
   { timestamps: true }
 );
 const Pdf = mongoose.model("Pdf", pdfSchema);
+//MEAL TICKER
+const mealSchema = {
+
+    InfoSection1: {
+        info1Number: { type: Number, required: true },
+        info1Txt: { type: String, required: true },
+    },
+    InfoSection2: {
+        info2Number: { type: Number, required: true },
+        info2Txt: { type: String, required: true },
+    },
+    InfoSection3: {
+        info3Number: { type: Number, required: true },
+        info3Txt: { type: String, required: true },
+    },
+    InfoSection4: {
+        info4Number: { type: Number, required: true },
+        info4Txt: { type: String, required: true },
+    },
+    LargeInfoSection: {
+        largeInfoNumber: { type: Number, required: true },
+        largeInfo4Txt: { type: String, required: true },
+    }
+};
+const meal = mongoose.model("Meal", mealSchema);
 //FACEBOOK
 const fbPostSchema = new mongoose.Schema(
     {
@@ -614,6 +639,32 @@ app.post("/admin/content", requireAdmin, async (req, res) => {
   }
 });
 
+//
+app.get("/admin/meals", requireAdmin, async (req, res) => {
+    try {
+        console.log("testing");
+        const info = await meals.find();
+        const slots = [1, 2, 3, 4, 5].map((slot) => {
+            const found = info.find((d) => d.slot === slot);
+            if (!found) {
+                console.log(slot)
+                return {
+                    slot,
+                    title: `${slot}`
+                };
+            }
+            return {
+                slot,
+                title: found.title,
+                _id: found._id,
+            };
+        });
+        res.json({ message: "success", data: slots });
+    } catch (err) {
+        res.status(500).json({ message: "error", data: err });
+    }
+});
+
 app.get("/get-all-partners", function (req, res) {
   // console.log("getting all partners...")
   Partner.find()
@@ -676,42 +727,6 @@ const newsletterSchema = {
 };
 const Newsletter = mongoose.model("Newsletter", newsletterSchema);
 //
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-    }
-});
-//
-async function sendNewsletterEmail(subject, htmlContent) {
-    try {
-        // 1. Get all email addresses from database
-        const subscribers = await Newsletter.find({}, "email");
-        if (subscribers.length === 0) {
-            console.log("No subscribers found.");
-            return;
-        }
-
-        const emailList = subscribers.map(sub => sub.email);
-
-        // 2. Define message
-        const mailOptions = {
-            from: process.env.MAIL_USER,
-            bcc: emailList,  // IMPORTANT: use BCC so everyone’s email is hidden
-            subject: subject,
-            html: htmlContent
-        };
-
-        // 3. Send the email
-        const info = await transporter.sendMail(mailOptions);
-
-        console.log("Emails sent:", info.accepted.length);
-    } catch (err) {
-        console.error("Error sending newsletter:", err);
-    }
-}
-//
 app.post('/newsletter-sign-up', async function (req, res) {
     console.log("Newsletter signing up...")
     const newEmail = req.body.newsletterEmail;
@@ -733,7 +748,7 @@ app.post('/newsletter-sign-up', async function (req, res) {
         res.redirect(`/?error_message=${err}`);
     }
 });
-//
+
 app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) => {
     console.log("posting newsletter...")
     const { header, content = "" } = req.body || {};
@@ -744,12 +759,10 @@ app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) 
         return res.status(400).json({ message: "Content is required" });
     }
     try {
-        await sendNewsletterEmail(
-            header,
-            content
-        );
+        console.log(header);
+        console.log(content);
 
-        res.status(201).json({ message: "success", data: "Newsletter Sent!"});
+        res.status(201).json({ message: "success", data: "Newsletter Sent!" });
     } catch (err) {
         res.status(500).json({ message: "error", data: err });
     }
