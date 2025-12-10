@@ -29,6 +29,7 @@ function Admin() {
         content: "",
         // file: null,
   });
+  const [meals, setMeals] = useState([]);
   const isAuthed = Boolean(token);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ function Admin() {
     fetchDirectors();
     fetchContent();
     fetchPdfs();
+    fetchMeals();
   }, [token]);
 
   async function fetchPartners() {
@@ -84,6 +86,27 @@ function Admin() {
       setError(err.message);
       setStatus("error");
     }
+  }
+
+  async function fetchMeals() {
+      setStatus("loading");
+      try {
+          const res = await fetch("/api/admin/meals", {
+              headers: { Authrization: `Bearer ${token}` },
+          });
+          if (res.status === 401) throw new Error("Unauthorized");
+          const data = await res.json();
+          if (data.message === "success") {
+              setMeals(data.data);
+              setStatus("success");
+              setError("");
+          } else {
+              throw  new Error(data.message || "Unable to load Meals");
+          }
+      } catch (err) {
+          setError(err.message);
+          setStatus("error");
+      }
   }
 
   async function fetchDirectors() {
@@ -315,8 +338,7 @@ function Admin() {
             if (!res.ok || data.message !== "success") {
                 throw new Error(data.message || "Could not create newsletter");
             }
-            setNewsletterForm({ header: "", content:""}); //file: null
-            setStatus("success");
+            setNewsletterForm({ header: "", content:""});//file: null
             alert("Newsletter Sent Successfully!");
         } catch (err) {
             setError(err.message);
@@ -428,6 +450,13 @@ function Admin() {
                         onClick={() => setActiveTab("newsletter")}
                     >
                         Newsletter
+                    </button>
+                    <button
+                        className={`btn ${activeTab === "meals" ? "btn-warning" : "btn-outline-secondary"}`}
+                        type="button"
+                        onClick={() => setActiveTab("meals")}
+                    >
+                        Meals
                     </button>
                 </div>
 
@@ -763,36 +792,29 @@ function Admin() {
                             {error}
                         </div>
                     )}
-                        <form className="g-2 mb-4" onSubmit={handleAddNewsletter}>
+                        <form className="row g-2 mb-4" onSubmit={handleAddNewsletter}>
                             <div className="col-12 col-md-4">
-                                <label htmlFor="headerBox">Subject:</label>
                                 <input
-                                    id="headerBox"
                                     type="text"
                                     className="form-control"
-                                    placeholder="Plain text"
+                                    placeholder="Header"
                                     value={newsletterForm.header}
                                     onChange={(e) =>
-                                        setNewsletterForm((f) => ({...f, header: e.target.value}))
+                                        setNewsletterForm((f) => ({ ...f, header: e.target.value }))
                                     }
                                 />
                             </div>
-                            <br></br>
-                            <div className="col-12 col-md-6">
-                                <label for="contentBox">Email Content:</label>
-                                <textarea
-                                    id="contentBox"
+                            <div className="col-12 col-md-4">
+                                <input
+                                    type="text"
                                     className="form-control"
-                                    placeholder="Plain text or HTML"
+                                    placeholder="Content"
                                     value={newsletterForm.content}
-                                    rows="6"
-                                    cols="50"
                                     onChange={(e) =>
-                                        setNewsletterForm((f) => ({...f, content: e.target.value}))
+                                        setNewsletterForm((f) => ({ ...f, content: e.target.value }))
                                     }
-                                ></textarea>
+                                />
                             </div>
-                            <br></br>
                             {/*
                             <div className="col-12 col-md-3">
                                 <input
@@ -813,6 +835,87 @@ function Admin() {
                         </form>
                     </>
                 )}
+
+                  {activeTab === "meals" && (
+                      <>
+                          {status === "loading" && (
+                              <div className="text-center text-muted">Loading...</div>
+                          )}
+                          {error && (
+                              <div className="alert alert-danger" role="alert">
+                                  {error}
+                              </div>
+                          )}
+
+                          <div className="table-responsive">
+                              <table className="table align-middle">
+                                  <thead>
+                                  <tr>
+                                      <th scope="col">Meal Slot</th>
+                                      <th scope="col">Title Section</th>
+                                      <th scope="col">Info Section</th>
+                                      <th scope="col" className="text-end">Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  {meals.map((meal) => (
+                                      <tr key={meal.slot}>
+                                          <td className="fw-semibold">PDF {meal.slot}</td>
+                                          <td style={{ minWidth: "180px" }}>
+                                              <input
+                                                  type="text"
+                                                  className="form-control form-control-sm"
+                                                  // value={pdfEdits[pdf.slot]?.title || ""}
+                                                  // onChange={(e) =>
+                                                  //     setPdfEdits((prev) => ({
+                                                  //         ...prev,
+                                                  //         [pdf.slot]: { ...(prev[pdf.slot] || {}), title: e.target.value },
+                                                  //     }))
+                                                  // }
+                                              />
+                                          </td>
+                                          <td className="text-muted small">
+                                              {/*{pdf.url ? (*/}
+                                              {/*    <a href={pdf.url} target="_blank" rel="noreferrer">*/}
+                                              {/*        {pdf.url}*/}
+                                              {/*    </a>*/}
+                                              {/*) : (*/}
+                                              {/*    <span className="text-muted">No file yet</span>*/}
+                                              {/*)}*/}
+                                              {/*<div className="mt-2">*/}
+                                              {/*    <input*/}
+                                              {/*        type="file"*/}
+                                              {/*        accept="application/pdf"*/}
+                                              {/*        className="form-control form-control-sm"*/}
+                                              {/*        onChange={(e) =>*/}
+                                              {/*            setPdfEdits((prev) => ({*/}
+                                              {/*                ...prev,*/}
+                                              {/*                [pdf.slot]: {*/}
+                                              {/*                    ...(prev[pdf.slot] || {}),*/}
+                                              {/*                    file: e.target.files?.[0] || null,*/}
+                                              {/*                },*/}
+                                              {/*            }))*/}
+                                              {/*        }*/}
+                                              {/*    />*/}
+                                              {/*</div>*/}
+                                          </td>
+                                          <td className="text-end">
+                                              <button
+                                                  className="btn btn-sm btn-outline-primary"
+                                                  type="button"
+                                                  //onClick={() => {}}
+                                                  disabled={status === "loading"}
+                                              >
+                                                  Save / Replace
+                                              </button>
+                                          </td>
+                                      </tr>
+                                  ))}
+                                  </tbody>
+                              </table>
+                          </div>
+                      </>
+                  )}
 
               </>
             )}
