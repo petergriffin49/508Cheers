@@ -32,13 +32,22 @@ function Admin() {
   const [meals, setMeals] = useState([]);
   const isAuthed = Boolean(token);
 
+  function handleUnauthorized(message = "Session expired. Please sign in again.") {
+    localStorage.removeItem("cheers-admin-token");
+    setToken("");
+    setPartners([]);
+    setDirectors([]);
+    setPdfs([]);
+    setError(message);
+    setStatus("idle");
+  }
+
   useEffect(() => {
     if (!token) return;
     fetchPartners();
     fetchDirectors();
     fetchContent();
     fetchPdfs();
-    fetchMeals();
   }, [token]);
 
   async function fetchPartners() {
@@ -47,7 +56,10 @@ function Admin() {
       const res = await fetch("/api/admin/partners", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.status === 401) throw new Error("Unauthorized");
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (data.message === "success") {
         setPartners(data.data);
@@ -68,7 +80,10 @@ function Admin() {
       const res = await fetch("/api/admin/pdfs", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.status === 401) throw new Error("Unauthorized");
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (data.message === "success") {
         setPdfs(data.data);
@@ -115,7 +130,10 @@ function Admin() {
       const res = await fetch("/api/admin/directors", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.status === 401) throw new Error("Unauthorized");
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (data.message === "success") {
         setDirectors(data.data);
@@ -136,7 +154,10 @@ function Admin() {
       const res = await fetch("/api/admin/content", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.status === 401) throw new Error("Unauthorized");
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (data.message === "success") {
         setContent((prev) => ({
@@ -170,6 +191,10 @@ function Admin() {
         headers: { Authorization: `Bearer ${token}` },
         body: fd,
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (!res.ok || data.message !== "success") {
         throw new Error(data.message || "Could not replace PDF");
@@ -225,6 +250,10 @@ function Admin() {
         },
         body: fd,
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (!res.ok || data.message !== "success") {
         throw new Error(data.message || "Could not create partner");
@@ -258,6 +287,10 @@ function Admin() {
         },
         body: fd,
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (!res.ok || data.message !== "success") {
         throw new Error(data.message || "Could not create director");
@@ -282,6 +315,10 @@ function Admin() {
         },
         body: JSON.stringify({ updates: content }),
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       const data = await res.json();
       if (!res.ok || data.message !== "success") {
         throw new Error(data.message || "Could not save content");
@@ -304,6 +341,10 @@ function Admin() {
           Authorization: `Bearer ${token}`,
         },
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       if (!res.ok) throw new Error("Delete failed");
       await fetchPartners();
     } catch (err) {
@@ -334,6 +375,10 @@ function Admin() {
                 },
                 body: fd,
             });
+            if (res.status === 401) {
+              handleUnauthorized();
+              return;
+            }
             const data = await res.json();
             if (!res.ok || data.message !== "success") {
                 throw new Error(data.message || "Could not create newsletter");
@@ -355,6 +400,10 @@ function Admin() {
           Authorization: `Bearer ${token}`,
         },
       });
+      if (res.status === 401) {
+        handleUnauthorized();
+        return;
+      }
       if (!res.ok) throw new Error("Delete failed");
       await fetchDirectors();
     } catch (err) {
