@@ -107,9 +107,12 @@ function Admin() {
       setStatus("loading");
       try {
           const res = await fetch("/api/admin/meals", {
-              headers: { Authrization: `Bearer ${token}` },
+              headers: { Authorization: `Bearer ${token}` },
           });
-          if (res.status === 401) throw new Error("Unauthorized");
+          if (res.status === 401) {
+            handleUnauthorized();
+            return;
+          }
           const data = await res.json();
           if (data.message === "success") {
               setMeals(data.data);
@@ -363,6 +366,7 @@ function Admin() {
             return;
         }
         setStatus("loading");
+        setError("");
         try {
             const fd = new FormData();
             fd.append("header", newsletterForm.header.trim());
@@ -384,10 +388,11 @@ function Admin() {
                 throw new Error(data.message || "Could not create newsletter");
             }
             setNewsletterForm({ header: "", content:""});//file: null
+            setStatus("success");
             alert("Newsletter Sent Successfully!");
         } catch (err) {
             setError(err.message);
-            setStatus("error - no response");
+            setStatus("error");
         }
     }
 
@@ -497,16 +502,19 @@ function Admin() {
                         className={`btn ${activeTab === "newsletter" ? "btn-warning" : "btn-outline-secondary"}`}
                         type="button"
                         onClick={() => setActiveTab("newsletter")}
-                    >
-                        Newsletter
-                    </button>
-                    <button
-                        className={`btn ${activeTab === "meals" ? "btn-warning" : "btn-outline-secondary"}`}
-                        type="button"
-                        onClick={() => setActiveTab("meals")}
-                    >
-                        Meals
-                    </button>
+                >
+                    Newsletter
+                </button>
+                <button
+                    className={`btn ${activeTab === "meals" ? "btn-warning" : "btn-outline-secondary"}`}
+                    type="button"
+                    onClick={() => {
+                      setActiveTab("meals");
+                      fetchMeals();
+                    }}
+                >
+                    Meals
+                </button>
                 </div>
 
                 {activeTab === "partners" && (
