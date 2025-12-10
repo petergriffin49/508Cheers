@@ -122,45 +122,55 @@ function Home() {
           </div>
 
             <div className="container">
-                <div className="text-center mb-4">
-                    <div className="badge-pill mb-2">Our Values</div>
-                    <h2 className="mb-2">How we C.H.E.E.R.S.</h2>
+              <div className="text-center mb-4">
+                <div className="badge-pill mb-2">Our Values</div>
+                <h2 className="mb-2">How we C.H.E.E.R.S.</h2>
+              </div>
+              <div className="row justify-content-center text-start">
+                <div className="col-12 col-md-10 col-lg-8">
+                  <div className="mb-4">
+                    <h6 className="mb-1">C- Community & Connection</h6>
+                    <p className="mb-0">
+                      Creating opportunities for youth to lead projects that uplift the unsheltered, underserved, and
+                      local families in need.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h6 className="mb-1">H- Health & Wellness</h6>
+                    <p className="mb-0">
+                      Promoting mental, emotional, and physical well-being through education, fitness, and self-care
+                      practices.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h6 className="mb-1">E- Equity & Empowerment</h6>
+                    <p className="mb-0">
+                      Advocating for fairness, inclusion, and leadership among youth and community members.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h6 className="mb-1">E- Education & Enrichment</h6>
+                    <p className="mb-0">
+                      Providing hands-on experiences in nutrition, cooking, career readiness, and civic engagement
+                      that inspire lifelong learning.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h6 className="mb-1">R- Resilience & Representation</h6>
+                    <p className="mb-0">
+                      Encouraging youth to harness the power of their stories and lived experiences to advocate
+                      for change at City Hall, School Committee meetings, and the State House.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h6 className="mb-1">S- Sustainability & Service</h6>
+                    <p className="mb-0">
+                      Building programs that address food insecurity and resource access through mutual aid, cultural
+                      food donations, and community partnerships.
+                    </p>
+                  </div>
                 </div>
-                <div className="row justify-content-center text-start">
-                    <div className="col-12 col-md-10 col-lg-8">
-                        <p className="text-left mb-4">
-                            <h6>C- Community & Connection</h6> Creating opportunities for youth
-                            to lead projects that uplift the unsheltered, underserved, and
-                            local families in need.
-                        </p>
-                        <p className="text-left mb-4">
-                            <h6>H- Health & Wellness</h6> Promoting mental, emotional, and
-                            physical well-being through education, fitness, and self-care
-                            practices.
-                        </p>
-                        <p className="text-left mb-4">
-                            <h6>E- Equity & Empowerment</h6> Advocating for fairness, inclusion,
-                            and leadership among youth and community members.
-                        </p>
-                        <p className="text-left mb-4">
-                            <h6>E- Education & Enrichment</h6> Providing hands-on experiences in
-                            nutrition, cooking, career readiness, and civic engagement
-                            that inspire lifelong learning.
-                        </p>
-                        <p className="text-left mb-4">
-                            <h6>R- Resilience & Representation</h6>Encouraging youth to harness
-                            the power of their stories and lived experiences to advocate
-                            for change at City Hall, School Committee meetings, and the
-                            State House.
-                        </p>
-                        <p className="text-left mb-4">
-                            <h6>S- Sustainability & Service</h6>
-                            Building programs that address food insecurity and resource
-                            access through mutual aid, cultural food donations, and
-                            community partnerships.
-                        </p>
-                    </div>
-                </div>
+              </div>
             </div>
             {/*
           <div className="pillars-grid mb-5">

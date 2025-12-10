@@ -15,26 +15,27 @@ function Impact() {
         let cancelled = false;
 
         async function fetchPosts() {
-            try {
-                const res = await fetch("api/get-three-new-facebook-posts/");
-                if (!res.ok) throw new Error("Failed fetching posts: " + res.status);
+          try {
+            const res = await fetch("/api/get-three-new-facebook-posts/");
+            if (!res.ok) throw new Error("Failed fetching posts: " + res.status);
 
-                const data = await res.json();
-
-                console.log(data);
-                if (!cancelled) {
-                    if (data.success === true) {
-                        setFbPosts(data.posts);
-                        console.log(data.posts);
-                        setFbStatus("success");
-                    } else {
-                        setFbStatus("error");
-                        setFbError("We couldn't load Facebook posts right now.");
-                    }
-                }
-            } catch (err) {
-                if (!cancelled) console.error("facebook posts fetch error", err);
+            const data = await res.json();
+            if (!cancelled) {
+              if (data.success === true) {
+                setFbPosts(data.posts);
+                setFbStatus("success");
+              } else {
+                setFbStatus("error");
+                setFbError("We couldn't load Facebook posts right now.");
+              }
             }
+          } catch (err) {
+            if (!cancelled) {
+              setFbStatus("error");
+              setFbError("We couldn't load Facebook posts right now.");
+              console.error("facebook posts fetch error", err);
+            }
+          }
         }
 
         fetchPosts();

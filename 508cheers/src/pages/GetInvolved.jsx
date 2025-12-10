@@ -177,7 +177,7 @@ function GetInvolved() {
                         and create powerful opportunities for youth.
                     </p>
                     <a
-                        href={volunteer_form_link}
+                        href={partner_form_link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-outline-primary w-100"
