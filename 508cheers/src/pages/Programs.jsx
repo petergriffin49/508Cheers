@@ -67,7 +67,7 @@ function Programs() {
         {/* Hero */}
         <section className="position-relative mb-5">
           <div className="cheers-hero">
-            <img src={t1} className="d-block w-100 h-50" alt="Youth leading program" />
+            <img src={t1} className="d-block w-100" alt="Youth leading program" />
             <div className="hero-overlay">
               <div className="container">
                 <div className="hero-content">
