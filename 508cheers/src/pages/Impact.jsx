@@ -7,41 +7,77 @@ import Post from "../components/fbPosts.jsx";
 const FACEBOOK_PAGE_URL = "https://www.facebook.com/508cheers/";
 
 function Impact() {
-  const [fbPosts, setFbPosts] = useState([]);
-  const [fbStatus, setFbStatus] = useState("loading");
-  const [fbError, setFbError] = useState("");
+    const [fbPosts, setFbPosts] = useState([]);
+    const [fbStatus, setFbStatus] = useState("loading");
+    const [fbError, setFbError] = useState("");
+
+    const [meals, setMeals] = useState([]);
+    const [mealsStatus, setMealsStatus] = useState("loading");
+    const [mealsError, setMealsError] = useState("");
 
     useEffect(() => {
         let cancelled = false;
 
-        async function fetchPosts() {
-          try {
+        fetchPosts(cancelled);
+        fetchInfo(cancelled);
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    async function fetchPosts(cancelled) {
+        try {
             const res = await fetch("/api/get-three-new-facebook-posts/");
             if (!res.ok) throw new Error("Failed fetching posts: " + res.status);
 
             const data = await res.json();
+
             if (!cancelled) {
-              if (data.success === true) {
-                setFbPosts(data.posts);
-                setFbStatus("success");
-              } else {
+                if (data.success === true) {
+                    setFbPosts(data.posts);
+                    setFbStatus("success");
+                } else {
+                    setFbStatus("error");
+                    setFbError("We couldn't load Facebook posts right now.");
+                }
+            }
+        } catch (err) {
+            if (!cancelled) {
                 setFbStatus("error");
                 setFbError("We couldn't load Facebook posts right now.");
-              }
+                console.error("facebook posts fetch error", err);
             }
-          } catch (err) {
-            if (!cancelled) {
-              setFbStatus("error");
-              setFbError("We couldn't load Facebook posts right now.");
-              console.error("facebook posts fetch error", err);
-            }
-          }
         }
+    }
 
-        fetchPosts();
+    async function fetchInfo(cancelled) {
+        try {
+            const res = await fetch("/api/meals"); // FIXED URL
+            if (!res.ok) throw new Error("Failed fetching meals: " + res.status);
 
-        return () => { cancelled = true };
-    }, []);
+            const data = await res.json();
+
+            if (!cancelled) {
+                if (data.message === "success") {
+                    console.log(data.data);
+                    setMeals(data.data);
+                    setMealsStatus(data.message);
+
+                } else {
+                    console.log(data.data);
+                    setMealsStatus(data.message);
+                    setMealsError(data.data);
+                }
+            }
+        } catch (err) {
+            if (!cancelled) {
+                setMealsStatus("error");
+                setMealsError("check");
+                console.error("meals fetch error", err);
+            }
+        }
+    }
 
   return (
     <>
@@ -98,20 +134,20 @@ function Impact() {
           <div className="container">
             <div className="stat-grid">
               <div className="stat-tile">
-                <h3 className="mb-1 text-primary">+99</h3>
-                <p className="mb-0 text-muted">Meals Served Monthly</p>
+                <h3 className="mb-1 text-primary">{mealsStatus === "loading" ? mealsStatus : meals[0].infoNumber}</h3>
+                <p className="mb-0 text-muted">{mealsStatus === "loading" ? mealsStatus : meals[0].infoTxt}</p>
               </div>
               <div className="stat-tile">
-                <h3 className="mb-1 text-primary">+1200</h3>
-                <p className="mb-0 text-muted">Community Members Fed Annually</p>
+                  <h3 className="mb-1 text-primary">{mealsStatus === "loading" ? mealsStatus : meals[1].infoNumber}</h3>
+                  <p className="mb-0 text-muted">{mealsStatus === "loading" ? mealsStatus : meals[1].infoTxt}</p>
               </div>
               <div className="stat-tile">
-                <h3 className="mb-1 text-primary">+4</h3>
-                <p className="mb-0 text-muted">Youth-Led Mutual Aid Projects Active</p>
+                  <h3 className="mb-1 text-primary">{mealsStatus === "loading" ? mealsStatus : meals[2].infoNumber}</h3>
+                  <p className="mb-0 text-muted">{mealsStatus === "loading" ? mealsStatus : meals[2].infoTxt}</p>
               </div>
               <div className="stat-tile">
-                <h3 className="mb-1 text-primary">$1</h3>
-                <p className="mb-0 text-muted">Join the Dance Circle with a small donation</p>
+                  <h3 className="mb-1 text-primary">{mealsStatus === "loading" ? mealsStatus : meals[3].infoNumber}</h3>
+                  <p className="mb-0 text-muted">{mealsStatus === "loading" ? mealsStatus : meals[3].infoTxt}</p>
               </div>
             </div>
           </div>
@@ -142,8 +178,8 @@ function Impact() {
                 <div className="form-card h-100">
                   <h4 className="mb-3">Meals to Date</h4>
                   <div className="stat-tile mb-3">
-                    <h2 className="mb-1 text-primary">2,400</h2>
-                    <p className="mb-0 text-muted">Meals prepared and shared</p>
+                      <h2 className="mb-1 text-primary">{mealsStatus === "loading" ? mealsStatus : meals[4].infoNumber}</h2>
+                      <p className="mb-0 text-muted">{mealsStatus === "loading" ? mealsStatus : meals[4].infoTxt}</p>
                   </div>
                   <p className="text-muted mb-3">
                     Every donation keeps the kitchen moving. Help us reach the next 1,000 meals.

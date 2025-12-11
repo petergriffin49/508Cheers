@@ -115,30 +115,14 @@ const pdfSchema = new mongoose.Schema(
 );
 const Pdf = mongoose.model("Pdf", pdfSchema);
 //MEAL TICKER
-const mealSchema = {
-
-    InfoSection1: {
-        info1Number: { type: Number, required: true },
-        info1Txt: { type: String, required: true },
-    },
-    InfoSection2: {
-        info2Number: { type: Number, required: true },
-        info2Txt: { type: String, required: true },
-    },
-    InfoSection3: {
-        info3Number: { type: Number, required: true },
-        info3Txt: { type: String, required: true },
-    },
-    InfoSection4: {
-        info4Number: { type: Number, required: true },
-        info4Txt: { type: String, required: true },
-    },
-    LargeInfoSection: {
-        largeInfoNumber: { type: Number, required: true },
-        largeInfo4Txt: { type: String, required: true },
+const mealSchema = new mongoose.Schema({
+    InfoSection: {
+        infoPostion: { type: String, required: true },
+        infoNumber: { type: String, required: true },
+        infoTxt: { type: String, required: true },
     }
-};
-const meal = mongoose.model("Meal", mealSchema);
+});
+const meals = mongoose.model("Meal", mealSchema);
 //FACEBOOK
 const fbPostSchema = new mongoose.Schema(
     {
@@ -639,31 +623,6 @@ app.post("/admin/content", requireAdmin, async (req, res) => {
   }
 });
 
-//
-app.get("/admin/meals", requireAdmin, async (req, res) => {
-    try {
-        console.log("testing");
-        const info = await meals.find();
-        const slots = [1, 2, 3, 4, 5].map((slot) => {
-            const found = info.find((d) => d.slot === slot);
-            if (!found) {
-                console.log(slot)
-                return {
-                    slot,
-                    title: `${slot}`
-                };
-            }
-            return {
-                slot,
-                title: found.title,
-                _id: found._id,
-            };
-        });
-        res.json({ message: "success", data: slots });
-    } catch (err) {
-        res.status(500).json({ message: "error", data: err });
-    }
-});
 
 app.get("/get-all-partners", function (req, res) {
   // console.log("getting all partners...")
@@ -805,3 +764,53 @@ app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) 
     }
 });
 
+//
+app.get("/admin/meals", requireAdmin, async (req, res) => {
+    try {
+        const info = await meals.find();
+        const slots = info.map((d) => ({
+            infoPostion: d.InfoSection.infoPostion,
+            infoNumber: d.InfoSection.infoNumber,
+            infoTxt: d.InfoSection.infoTxt,
+            _id: d._id
+        }));
+        res.json({ message: "success", data: slots });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "error", data: err });
+    }
+});
+
+app.get("/meals", async (req, res) => {
+    try {
+        const info = await meals.find();
+        const slots = info.map((d) => ({
+            infoPostion: d.InfoSection.infoPostion,
+            infoNumber: d.InfoSection.infoNumber,
+            infoTxt: d.InfoSection.infoTxt,
+            _id: d._id
+        }));
+        res.json({ message: "success", data: slots });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "error", data: err });
+    }
+});
+
+app.post("/admin/meals/:id", requireAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const update = req.body;
+
+        const updated = await meals.findByIdAndUpdate(
+            id,
+            { InfoSection: update },
+            { new: true }
+        );
+
+        res.json({ message: "success", data: updated });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "error", data: err });
+    }
+});

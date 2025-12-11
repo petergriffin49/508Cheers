@@ -1,0 +1,37 @@
+[
+  {
+    "InfoSection": {
+      "infoPostion": "Top Left Most",
+      "infoNumber": "+99",
+      "infoTxt": "Meals Served Monthly"
+    }
+  },
+  {
+    "InfoSection": {
+      "infoPostion": "Top Left Middle",
+      "infoNumber": "+1200",
+      "infoTxt": "Community Members Fed Annually"
+    }
+  },
+  {
+    "InfoSection": {
+      "infoPostion": "Top Right Middle",
+      "infoNumber": "+4",
+      "infoTxt": "Youth-Led Mutual Aid Projects Active"
+    }
+  },
+  {
+    "InfoSection": {
+      "infoPostion": "Top Right Most",
+      "infoNumber": "$1",
+      "infoTxt": "Join the Dance Circle with a small donation"
+    }
+  },
+  {
+    "InfoSection": {
+      "infoPostion": "Center Mid Right",
+      "infoNumber": "2,400",
+      "infoTxt": "Meals prepared and shared"
+    }
+  }
+]

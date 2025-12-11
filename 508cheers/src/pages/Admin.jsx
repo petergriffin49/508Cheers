@@ -38,6 +38,7 @@ function Admin() {
     setPartners([]);
     setDirectors([]);
     setPdfs([]);
+    setMeals([]);
     setError(message);
     setStatus("idle");
   }
@@ -48,6 +49,7 @@ function Admin() {
     fetchDirectors();
     fetchContent();
     fetchPdfs();
+    fetchMeals();
   }, [token]);
 
   async function fetchPartners() {
@@ -416,7 +418,41 @@ function Admin() {
     }
   }
 
-  function handleLogout() {
+    async function handleUpdateMeal(meal) {
+        if (!window.confirm("Update Meals?")) return;
+
+        setStatus("loading");
+        try {
+            const res = await fetch(`/api/admin/meals/${meal._id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    infoPostion: meal.infoPostion,
+                    infoNumber: meal.infoNumber,
+                    infoTxt: meal.infoTxt
+                })
+            });
+            if (res.status === 401) {
+                handleUnauthorized();
+                return;
+            }
+            const data = await res.json();
+            if (!res.ok || data.message !== "success") {
+                throw new Error(data.message || "Could not update meal information");
+            }
+            setContent((prev) => ({ ...prev, ...data.data }));
+            setStatus("success");
+            setError("");
+        } catch (err) {
+            setError(err.message);
+            setStatus("error");
+        }
+    }
+
+    function handleLogout() {
     localStorage.removeItem("cheers-admin-token");
     setToken("");
     setPartners([]);
@@ -909,65 +945,53 @@ function Admin() {
                                   <thead>
                                   <tr>
                                       <th scope="col">Meal Slot</th>
-                                      <th scope="col">Title Section</th>
-                                      <th scope="col">Info Section</th>
+                                      <th scope="col">Meal Number</th>
+                                      <th scope="col">Meal Info Section</th>
                                       <th scope="col" className="text-end">Actions</th>
                                   </tr>
                                   </thead>
                                   <tbody>
-                                  {meals.map((meal) => (
-                                      <tr key={meal.slot}>
-                                          <td className="fw-semibold">PDF {meal.slot}</td>
-                                          <td style={{ minWidth: "180px" }}>
+                                  {meals.map((meal, idx) => (
+                                      <tr key={meal.infoPostion}>
+                                          <td className="fw-semibold">{meal.infoPostion}</td>
+
+                                          <td>
                                               <input
                                                   type="text"
                                                   className="form-control form-control-sm"
-                                                  // value={pdfEdits[pdf.slot]?.title || ""}
-                                                  // onChange={(e) =>
-                                                  //     setPdfEdits((prev) => ({
-                                                  //         ...prev,
-                                                  //         [pdf.slot]: { ...(prev[pdf.slot] || {}), title: e.target.value },
-                                                  //     }))
-                                                  // }
+                                                  value={meal.infoNumber}
+                                                  onChange={(e) => {
+                                                      const newMeals = [...meals];
+                                                      newMeals[idx] = { ...newMeals[idx], infoNumber: e.target.value };
+                                                      setMeals(newMeals);
+                                                  }}
                                               />
                                           </td>
-                                          <td className="text-muted small">
-                                              {/*{pdf.url ? (*/}
-                                              {/*    <a href={pdf.url} target="_blank" rel="noreferrer">*/}
-                                              {/*        {pdf.url}*/}
-                                              {/*    </a>*/}
-                                              {/*) : (*/}
-                                              {/*    <span className="text-muted">No file yet</span>*/}
-                                              {/*)}*/}
-                                              {/*<div className="mt-2">*/}
-                                              {/*    <input*/}
-                                              {/*        type="file"*/}
-                                              {/*        accept="application/pdf"*/}
-                                              {/*        className="form-control form-control-sm"*/}
-                                              {/*        onChange={(e) =>*/}
-                                              {/*            setPdfEdits((prev) => ({*/}
-                                              {/*                ...prev,*/}
-                                              {/*                [pdf.slot]: {*/}
-                                              {/*                    ...(prev[pdf.slot] || {}),*/}
-                                              {/*                    file: e.target.files?.[0] || null,*/}
-                                              {/*                },*/}
-                                              {/*            }))*/}
-                                              {/*        }*/}
-                                              {/*    />*/}
-                                              {/*</div>*/}
+
+                                          <td>
+                                              <input
+                                                  type="text"
+                                                  className="form-control form-control-sm"
+                                                  value={meal.infoTxt}
+                                                  onChange={(e) => {
+                                                      const updated = [...meals];
+                                                      updated[idx] = { ...meal, infoNumber: e.target.value };
+                                                      setMeals(updated);
+                                                  }}
+                                              />
                                           </td>
+
                                           <td className="text-end">
                                               <button
                                                   className="btn btn-sm btn-outline-primary"
-                                                  type="button"
-                                                  //onClick={() => {}}
-                                                  disabled={status === "loading"}
+                                                  onClick={() => handleUpdateMeal(meal)}
                                               >
                                                   Save / Replace
                                               </button>
                                           </td>
                                       </tr>
-                                  ))}
+                                  ))
+                                  }
                                   </tbody>
                               </table>
                           </div>
