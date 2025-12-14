@@ -122,7 +122,7 @@ const mealSchema = new mongoose.Schema({
         infoTxt: { type: String, required: true },
     }
 });
-const meals = mongoose.model("Meal", mealSchema);
+const Meals = mongoose.model("Meal", mealSchema);
 //FACEBOOK
 const fbPostSchema = new mongoose.Schema(
     {
@@ -767,7 +767,7 @@ app.post("/admin/newsletter", requireAdmin, upload.single(""), async (req, res) 
 //
 app.get("/admin/meals", requireAdmin, async (req, res) => {
     try {
-        const info = await meals.find();
+        const info = await Meals.find();
         const slots = info.map((d) => ({
             infoPostion: d.InfoSection.infoPostion,
             infoNumber: d.InfoSection.infoNumber,
@@ -783,7 +783,7 @@ app.get("/admin/meals", requireAdmin, async (req, res) => {
 
 app.get("/meals", async (req, res) => {
     try {
-        const info = await meals.find();
+        const info = await Meals.find();
         const slots = info.map((d) => ({
             infoPostion: d.InfoSection.infoPostion,
             infoNumber: d.InfoSection.infoNumber,
@@ -802,7 +802,7 @@ app.post("/admin/meals/:id", requireAdmin, async (req, res) => {
         const { id } = req.params;
         const update = req.body;
 
-        const updated = await meals.findByIdAndUpdate(
+        const updated = await Meals.findByIdAndUpdate(
             id,
             { InfoSection: update },
             { new: true }
